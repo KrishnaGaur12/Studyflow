@@ -42,7 +42,7 @@ export default function Landing() {
             position: 'absolute',
             top: '20px',
             left: '20px',
-            height: '100px',
+            height: '80px',
             objectFit: 'contain',
             filter: 'invert(1) brightness(2)',
             zIndex: 20
