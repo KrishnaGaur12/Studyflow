@@ -76,6 +76,7 @@ Students preparing for exams or interviews often struggle to stay consistent whi
 | Deployment | Vercel |
 
 ---
+## Project Structure
 
 StudysFlows/
 ├── public/
