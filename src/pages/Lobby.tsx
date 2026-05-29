@@ -17,6 +17,11 @@ export default function Lobby() {
   const [loading, setLoading] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [inviteCode, setInviteCode] = useState('');
+  const [viewMode, setViewMode] = useState<'yours' | 'global'>('yours');
+
+  const displayedRooms = viewMode === 'yours' 
+    ? rooms.filter(room => room.created_by === user?.id)
+    : rooms;
 
   const fetchRooms = async () => {
     const { data } = await supabase
@@ -121,9 +126,44 @@ export default function Lobby() {
                 fontFamily: "'Manrope', sans-serif",
                 marginBottom: 8,
               }}>
-                Your Rooms
+                {viewMode === 'yours' ? 'Your Rooms' : 'Global Rooms'}
               </h1>
-              <p style={{ fontSize: 16, color: '#6366f1' }}>Join an open room or create your own.</p>
+              <p style={{ fontSize: 16, color: '#6366f1', marginBottom: 24 }}>Join an open room or create your own.</p>
+              
+              <div style={{
+                display: 'flex', background: 'rgba(255,255,255,0.4)',
+                padding: 4, borderRadius: 12, width: 'fit-content',
+                border: '1px solid rgba(165,180,252,0.3)',
+              }}>
+                <button
+                  onClick={() => setViewMode('yours')}
+                  style={{
+                    padding: '8px 24px',
+                    borderRadius: 8, border: 'none', cursor: 'pointer',
+                    fontSize: 14, fontWeight: 700, fontFamily: "'Manrope', sans-serif",
+                    background: viewMode === 'yours' ? '#fff' : 'transparent',
+                    color: viewMode === 'yours' ? '#4f46e5' : '#6366f1',
+                    boxShadow: viewMode === 'yours' ? '0 2px 8px rgba(99,102,241,0.1)' : 'none',
+                    transition: 'all 0.2s ease',
+                  }}
+                >
+                  Your Rooms
+                </button>
+                <button
+                  onClick={() => setViewMode('global')}
+                  style={{
+                    padding: '8px 24px',
+                    borderRadius: 8, border: 'none', cursor: 'pointer',
+                    fontSize: 14, fontWeight: 700, fontFamily: "'Manrope', sans-serif",
+                    background: viewMode === 'global' ? '#fff' : 'transparent',
+                    color: viewMode === 'global' ? '#4f46e5' : '#6366f1',
+                    boxShadow: viewMode === 'global' ? '0 2px 8px rgba(99,102,241,0.1)' : 'none',
+                    transition: 'all 0.2s ease',
+                  }}
+                >
+                  Global
+                </button>
+              </div>
             </div>
             
             <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
@@ -204,7 +244,7 @@ export default function Lobby() {
                 </div>
               ))}
             </div>
-          ) : rooms.length === 0 ? (
+          ) : displayedRooms.length === 0 ? (
             <div style={{
               display: 'flex', flexDirection: 'column',
               alignItems: 'center', justifyContent: 'center',
@@ -245,7 +285,7 @@ export default function Lobby() {
             </div>
           ) : (
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 24 }}>
-              {rooms.map(room => (
+              {displayedRooms.map(room => (
                 <RoomCard key={room.id} room={room} onClick={() => handleRoomClick(room)} />
               ))}
             </div>

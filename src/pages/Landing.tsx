@@ -113,16 +113,16 @@ export default function Landing() {
           </h1>
           <p style={{
             fontFamily: "'Manrope', sans-serif",
-            fontSize: '1.05rem',
-            color: 'rgba(255, 255, 255, 0.85)',
-            maxWidth: '700px',
+            fontSize: '1.25rem',
+            color: 'rgba(255, 255, 255, 0.9)',
+            maxWidth: '650px',
             lineHeight: 1.6,
-            marginBottom: '32px',
+            marginBottom: '40px',
             fontWeight: 400,
-            textShadow: '0 2px 8px rgba(0,0,0,0.3)',
+            textShadow: '0 2px 8px rgba(0,0,0,0.4)',
+            letterSpacing: '0.01em',
           }}>
-            We're designing tools for deep thinkers, bold creators, and quiet rebels. Amid<br />
-            the chaos, we build digital spaces for sharp focus and inspired work.
+            StudyFlow is a virtual study room where you and your friends can study together with a shared timer, live chat, and progress tracking. No more studying alone and losing focus.
           </p>
 
           <Link href="/login" style={{

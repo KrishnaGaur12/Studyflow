@@ -21,17 +21,19 @@ export function TopNav({ roomName, hostedBy, onLeave }: TopNavProps) {
 
   return (
     <nav style={{
-      position: 'fixed', top: 0, left: 0, right: 0,
-      height: 72,
-      background: 'rgba(255, 255, 255, 0.55)',
+      position: 'fixed', top: 20, left: '50%', transform: 'translateX(-50%)',
+      width: 'calc(100% - 48px)', maxWidth: '1200px',
+      height: 64,
+      background: 'rgba(255, 255, 255, 0.75)',
       backdropFilter: 'blur(24px)',
       WebkitBackdropFilter: 'blur(24px)',
-      borderBottom: '1px solid rgba(165, 180, 252, 0.2)',
+      border: '1px solid rgba(165, 180, 252, 0.3)',
+      borderRadius: 999,
       display: 'flex', alignItems: 'center',
-      padding: '0 32px',
+      padding: '0 24px',
       zIndex: 40,
       gap: 16,
-      boxShadow: '0 1px 12px rgba(99, 102, 241, 0.04)',
+      boxShadow: '0 8px 32px rgba(99, 102, 241, 0.08)',
     }}>
       {/* Logo */}
       <Link href="/lobby" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', flexShrink: 0 }}>
@@ -96,16 +98,20 @@ export function TopNav({ roomName, hostedBy, onLeave }: TopNavProps) {
           href="/dashboard"
           data-testid="link-dashboard"
           style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            width: 40, height: 40, borderRadius: 12,
-            color: '#4338ca', textDecoration: 'none',
-            background: 'rgba(79, 70, 229, 0.06)',
-            border: '1px solid rgba(165, 180, 252, 0.15)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+            padding: '0 16px', height: 40, borderRadius: 999,
+            color: '#4f46e5', textDecoration: 'none',
+            background: '#e0e7ff',
+            fontWeight: 700, fontSize: 14,
             transition: 'all 0.2s ease',
+            fontFamily: "'Manrope', sans-serif"
           }}
-          title="Dashboard"
+          onMouseEnter={e => e.currentTarget.style.background = '#c7d2fe'}
+          onMouseLeave={e => e.currentTarget.style.background = '#e0e7ff'}
+          title="Stats"
         >
-          <BarChart2 size={18} />
+          <BarChart2 size={18} strokeWidth={2.5} />
+          <span>Stats</span>
         </Link>
 
         {/* Avatar/menu */}

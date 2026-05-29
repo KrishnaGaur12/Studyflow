@@ -11,6 +11,7 @@ import Dashboard from '@/pages/Dashboard';
 import Join from '@/pages/Join';
 import Landing from '@/pages/Landing';
 
+import { ReactLenis } from '@studio-freight/react-lenis';
 import { Background3D } from '@/components/Background3D';
 
 const queryClient = new QueryClient();
@@ -44,14 +45,28 @@ function AppContent() {
 
 export default function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
-        <AuthProvider>
-          <ToastProvider>
-            <AppContent />
-          </ToastProvider>
-        </AuthProvider>
-      </ThemeProvider>
-    </QueryClientProvider>
+    <ReactLenis
+      root
+      options={{
+        lerp: 0.1, // Smooth factor
+        duration: 1.2, // Animation duration
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        smoothTouch: false, // Keep mobile touch normal
+        touchMultiplier: 2,
+      }}
+    >
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider>
+          <AuthProvider>
+            <ToastProvider>
+              <AppContent />
+            </ToastProvider>
+          </AuthProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </ReactLenis>
   );
 }

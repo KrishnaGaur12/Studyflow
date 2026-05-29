@@ -21,9 +21,9 @@ export function Background3D() {
         midtoneColor: 0xc7d2fe,
         lowlightColor: 0xe5e7eb,
         baseColor: 0xffffff,
-        blurFactor: 0.86,
-        speed: 1.50,
-        zoom: 0.60
+        blurFactor: 0.71,
+        speed: 2.90,
+        zoom: 0.40
       }));
     }
     return () => {
