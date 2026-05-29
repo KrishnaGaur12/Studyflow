@@ -1,81 +1,146 @@
 # StudyFlow
 
-StudyFlow is a premium, real-time collaborative study platform that provides users with shared focus timers and accountability tools. It enables users to create or join study rooms, track their focus sessions, communicate with others in real time, and customize their study profiles.
+> A real-time collaborative study platform built for students who want to stay consistent, accountable, and focused — together.
 
-## Features Implemented
+---
 
-*   **Premium Glassmorphic UI**: High-end interface built on top of interactive 3D Vanta background effects (`Vanta.FOG` & Three.js).
-*   **Lenis Smooth Scrolling**: Buttery smooth, native-feeling scrolling experience across the entire application using `@studio-freight/react-lenis`.
-*   **Real-time Study Rooms**: Create open global rooms or private invite-only rooms for collaborative focus sessions.
-*   **Synchronized Pomodoro Timers**: Shared 25-minute focus timers controlled by room hosts, perfectly synchronized across all participants using Supabase Realtime.
-*   **Live Presence & Status Tracking**: See exactly who is currently in the room, along with their active status (Live, Idle, etc.).
-*   **Real-time Chat**: Instant messaging within study rooms to communicate without breaking focus.
-*   **Customizable User Profiles**: Dedicated profile page to select custom profile pictures, update display names, usernames, and favorite quotes.
-*   **Session History & Analytics**: Dashboard tracking total study time, number of sessions, messages sent, rooms joined, and historical activity data visualized with vibrant, minimal stat cards.
-*   **Authentication**: Secure email/password and Google OAuth authentication using Supabase.
+## Problem Statement
 
-## Tech Stack Used
+Students preparing for exams or interviews often struggle to stay consistent while studying alone. Existing communication tools lack focused collaboration and accountability features designed specifically for group study sessions. StudyFlow solves this by providing a structured, distraction-free environment where students can study together in real time — no matter where they are.
 
-*   **Frontend Framework**: React 18
-*   **Build Tool**: Vite
-*   **Routing**: Wouter
-*   **Styling**: Vanilla CSS (CSS Variables, Flexbox/Grid) with custom frosted glass UI design
-*   **Icons**: Lucide React
-*   **Smooth Scrolling**: React Lenis
-*   **Backend & Database**: Supabase (PostgreSQL, Auth)
-*   **Real-time Capabilities**: Supabase Realtime Channels (Presence & Database WebSockets)
-*   **Background Effects**: Vanta.js (FOG) with Three.js
+---
 
-## Project Setup Instructions
 
-### Prerequisites
+🔗 [Live Demo](https://studyflow-two-phi.vercel.app/)
 
-*   Node.js (v16 or higher)
-*   npm or yarn
-*   A Supabase project
+---
 
-### 1. Clone the repository
+## Features
 
-```bash
-git clone <repository-url>
-cd StudysFlows
-```
+### Authentication
+- Secure sign-in via **Google OAuth** and **email/password**
+- Powered by Supabase Auth with automatic profile creation on first sign-in
 
-### 2. Install dependencies
+### Study Room Management
+- Create **open rooms** (visible to everyone) or **private invite-only rooms**
+- Join private rooms via a unique invite code
+- Room host controls who can start and stop sessions
 
-```bash
-npm install
-```
+### Synchronized Pomodoro Timer
+- Shared **25-minute focus timer** controlled by the room host
+- Timer state is synchronized across **all participants in real time** using Supabase Realtime
+- Every member sees the same timer — no drift, no mismatch
 
-### 3. Environment Variables
+### Live Presence & Status Tracking
+- See **who is currently in the room** and their live status (Active / Idle)
+- Presence updates instantly as members join or leave
 
-Create a `.env` file in the root directory and add your Supabase credentials:
+### Real-time Room Chat
+- Send and receive messages instantly inside any study room
+- Chat persists so latecomers can see the conversation history
 
+### Session History & Analytics
+- Personal dashboard showing:
+  - Total study time (hours + minutes)
+  - Number of completed sessions
+  - Total messages sent
+  - Number of rooms joined
+- Data visualized with clean, minimal stat cards
+
+### Customizable User Profiles
+- Upload a profile picture
+- Set a display name, username, and a personal quote
+- Profile updates reflect everywhere in real time
+
+### Premium UI/UX
+- Glassmorphic dark design with **Vanta.js FOG** animated 3D background (Three.js)
+- Buttery smooth scrolling via **React Lenis**
+- Fully responsive web application.
+---
+
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend Framework | React 18 |
+| Build Tool | Vite |
+| Routing | Wouter |
+| Styling | Vanilla CSS — CSS Variables, Flexbox, Grid |
+| Icons | Lucide React |
+| Smooth Scrolling | React Lenis |
+| Backend & Database | Supabase (PostgreSQL) |
+| Authentication | Supabase Auth (Google OAuth + Email) |
+| Real-time | Supabase Realtime Channels (Presence + DB Webhooks) |
+| Background Effects | Vanta.js (FOG) + Three.js |
+| Deployment | Vercel |
+
+---
+
+StudysFlows/
+├── public/
+│   ├── pfp1.png
+│   └── pfp2.png
+├── src/
+│   ├── components/
+│   │   ├── Background3D.tsx
+│   │   ├── Chat.tsx
+│   │   ├── CreateRoomModal.tsx
+│   │   ├── Logo.tsx
+│   │   ├── PresenceSidebar.tsx
+│   │   ├── RoomCard.tsx
+│   │   ├── RouteGuard.tsx
+│   │   ├── Timer.tsx
+│   │   └── TopNav.tsx
+│   ├── context/
+│   │   ├── AuthContext.tsx
+│   │   ├── ThemeContext.tsx
+│   │   └── ToastContext.tsx
+│   ├── lib/
+│   │   └── supabase.ts
+│   ├── pages/
+│   │   ├── Dashboard.tsx
+│   │   ├── Join.tsx
+│   │   ├── Landing.tsx
+│   │   ├── Lobby.tsx
+│   │   ├── Login.tsx
+│   │   ├── Profile.tsx
+│   │   ├── Room.tsx
+│   │   └── Signup.tsx
+│   ├── styles/
+│   │   └── tokens.css
+│   ├── App.tsx
+│   ├── index.css
+│   └── main.tsx
+├── .env
+├── .env.example
+├── .gitignore
+├── index.html
+├── package.json
+├── supabase-schema.sql
+├── tsconfig.json
+├── vercel.json
+└── vite.config.ts
+
+## Setup
+
+1. Clone the repo and run `npm install`
+2. Create a `.env` file:
 ```env
-VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_URL=your_supabase_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
+3. Run `supabase-schema.sql` in your Supabase SQL Editor
+4. Place `pfp1.png` and `pfp2.png` in the `public/` folder
+5. Run `npm run dev`
 
-### 4. Database Setup
+## User Stories Covered
 
-Execute the SQL commands found in `supabase-schema.sql` in your Supabase SQL Editor to provision the required tables, row-level security (RLS) policies, and database functions.
-
-### 5. Setup Avatar Images
-
-Ensure you place two image files named `pfp1.png` and `pfp2.png` into the `public/` directory. These will be available for users to select on their Profile page.
-
-### 6. Run the Development Server
-
-```bash
-npm run dev
-```
-
-The application will be available at `http://localhost:5173`.
-
-### 7. Build for Production
-
-```bash
-npm run build
-```
-
-The compiled assets will be output to the `dist` directory.
+| Story | Status |
+|---|---|
+| Create study rooms | ✅ |
+| Invite other users | ✅ |
+| Start study sessions | ✅ |
+| Track session durations | ✅ |
+| Communicate within the room | ✅ |
+| View room activity history | ✅ |
