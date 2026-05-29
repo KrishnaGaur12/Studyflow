@@ -126,7 +126,7 @@ export function Timer({ roomId, isAdmin, currentUserId, onStatusChange, myStatus
       flex: 1, display: 'flex', flexDirection: 'column',
       alignItems: 'center', justifyContent: 'center',
       gap: 32,
-      fontFamily: "'Outfit', sans-serif",
+      fontFamily: "'Manrope', sans-serif",
       padding: 32,
       background: 'rgba(255, 255, 255, 0.4)',
       backdropFilter: 'blur(20px)',
@@ -252,7 +252,7 @@ export function Timer({ roomId, isAdmin, currentUserId, onStatusChange, myStatus
               fontSize: 15, fontWeight: 600,
               cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10,
               transition: `all 0.2s ease`,
-              fontFamily: "'Outfit', sans-serif",
+              fontFamily: "'Manrope', sans-serif",
             }}
             onMouseEnter={() => setHoveredToggle(true)}
             onMouseLeave={() => setHoveredToggle(false)}
@@ -283,7 +283,7 @@ export function Timer({ roomId, isAdmin, currentUserId, onStatusChange, myStatus
                   boxShadow: hoveredStart ? '0 8px 24px rgba(79, 70, 229, 0.4)' : '0 4px 14px rgba(79, 70, 229, 0.3)',
                   transform: hoveredStart && !starting ? 'translateY(-2px)' : 'none',
                   transition: 'all 0.2s ease',
-                  fontFamily: "'Outfit', sans-serif",
+                  fontFamily: "'Manrope', sans-serif",
                 }}
                 onMouseEnter={() => setHoveredStart(true)}
                 onMouseLeave={() => setHoveredStart(false)}
@@ -307,7 +307,7 @@ export function Timer({ roomId, isAdmin, currentUserId, onStatusChange, myStatus
                   color: '#ef4444', fontSize: 15, fontWeight: 600,
                   cursor: ending ? 'not-allowed' : 'pointer',
                   display: 'flex', alignItems: 'center', gap: 10,
-                  fontFamily: "'Outfit', sans-serif",
+                  fontFamily: "'Manrope', sans-serif",
                   transition: 'all 0.2s ease',
                 }}
                 onMouseEnter={() => setHoveredEnd(true)}
@@ -340,9 +340,9 @@ export function Timer({ roomId, isAdmin, currentUserId, onStatusChange, myStatus
             border: '1px solid rgba(165, 180, 252, 0.4)',
             boxShadow: '0 24px 48px rgba(30, 27, 75, 0.15)',
             zIndex: 101, width: '90%', maxWidth: 400,
-            fontFamily: "'Outfit', sans-serif",
+            fontFamily: "'Manrope', sans-serif",
           }}>
-            <h3 style={{ fontSize: 24, fontWeight: 700, color: '#1e1b4b', marginBottom: 12, fontFamily: "'Playfair Display', serif" }}>
+            <h3 style={{ fontSize: 24, fontWeight: 700, color: '#1e1b4b', marginBottom: 12, fontFamily: "'Manrope', sans-serif" }}>
               End the session?
             </h3>
             <p style={{ fontSize: 15, color: '#4f46e5', marginBottom: 32, lineHeight: 1.6 }}>

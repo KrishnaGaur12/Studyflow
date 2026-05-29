@@ -86,14 +86,14 @@ export function CreateRoomModal({ onClose, onCreated }: CreateRoomModalProps) {
         padding: 40,
         width: '90%', maxWidth: 520,
         zIndex: 101,
-        fontFamily: "'Outfit', sans-serif",
+        fontFamily: "'Manrope', sans-serif",
       }}>
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 32 }}>
           <div>
             <h2 style={{ 
               fontSize: 28, fontWeight: 700, color: '#1e1b4b', marginBottom: 8,
-              fontFamily: "'Playfair Display', serif", letterSpacing: '-0.02em'
+              fontFamily: "'Manrope', sans-serif", letterSpacing: '-0.02em'
             }}>
               New study room
             </h2>
@@ -134,7 +134,7 @@ export function CreateRoomModal({ onClose, onCreated }: CreateRoomModalProps) {
               borderRadius: 12,
               color: '#1e1b4b', fontSize: 15,
               outline: 'none', boxSizing: 'border-box',
-              fontFamily: "'Outfit', sans-serif",
+              fontFamily: "'Manrope', sans-serif",
               transition: 'border-color 0.2s ease',
             }}
             onFocus={e => e.currentTarget.style.borderColor = '#6366f1'}
@@ -192,7 +192,7 @@ export function CreateRoomModal({ onClose, onCreated }: CreateRoomModalProps) {
               background: 'transparent', border: 'none', cursor: 'pointer',
               color: '#6366f1', fontSize: 15, fontWeight: 600,
               borderRadius: 12,
-              fontFamily: "'Outfit', sans-serif",
+              fontFamily: "'Manrope', sans-serif",
             }}
             onMouseEnter={e => e.currentTarget.style.background = 'rgba(165, 180, 252, 0.1)'}
             onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
@@ -213,7 +213,7 @@ export function CreateRoomModal({ onClose, onCreated }: CreateRoomModalProps) {
               opacity: !canCreate || loading ? 0.6 : 1,
               boxShadow: '0 4px 14px rgba(79, 70, 229, 0.3)',
               transition: 'all 0.2s ease',
-              fontFamily: "'Outfit', sans-serif",
+              fontFamily: "'Manrope', sans-serif",
             }}
             onMouseEnter={e => { if (canCreate && !loading) { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(79, 70, 229, 0.4)'; } }}
             onMouseLeave={e => { if (canCreate && !loading) { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(79, 70, 229, 0.3)'; } }}

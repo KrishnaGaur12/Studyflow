@@ -38,7 +38,7 @@ export function TopNav({ roomName, hostedBy, onLeave }: TopNavProps) {
         <img src="/logo.png" alt="StudyFlow" style={{ height: 32, objectFit: 'contain', mixBlendMode: 'multiply' }} />
         <span style={{
           fontSize: 20, fontWeight: 700,
-          fontFamily: "'Playfair Display', serif",
+          fontFamily: "'Manrope', sans-serif",
           color: '#1e1b4b',
           letterSpacing: '-0.02em',
         }}>
@@ -84,7 +84,7 @@ export function TopNav({ roomName, hostedBy, onLeave }: TopNavProps) {
               color: '#dc2626',
               cursor: 'pointer',
               fontWeight: 500,
-              fontFamily: "'Outfit', sans-serif",
+              fontFamily: "'Manrope', sans-serif",
               transition: 'all 0.2s ease',
             }}
           >
@@ -162,7 +162,7 @@ export function TopNav({ roomName, hostedBy, onLeave }: TopNavProps) {
                     background: 'none', border: 'none', cursor: 'pointer',
                     borderRadius: 10,
                     color: '#dc2626', fontSize: 14, fontWeight: 500,
-                    fontFamily: "'Outfit', sans-serif",
+                    fontFamily: "'Manrope', sans-serif",
                     transition: 'background 0.15s ease',
                   }}
                   onMouseEnter={e => (e.currentTarget.style.background = 'rgba(220, 38, 38, 0.06)')}

@@ -251,7 +251,7 @@ export function Chat({ roomId }: ChatProps) {
       border: '1px solid rgba(165, 180, 252, 0.2)',
       display: 'flex', flexDirection: 'column',
       height: '100%', flexShrink: 0,
-      fontFamily: "'Outfit', sans-serif",
+      fontFamily: "'Manrope', sans-serif",
       minWidth: 0,
       overflow: 'hidden',
     }}>
@@ -373,7 +373,7 @@ export function Chat({ roomId }: ChatProps) {
             background: 'rgba(255, 255, 255, 0.8)',
             border: '1px solid rgba(165, 180, 252, 0.4)',
             borderRadius: 12,
-            outline: 'none', fontFamily: "'Outfit', sans-serif",
+            outline: 'none', fontFamily: "'Manrope', sans-serif",
             boxSizing: 'border-box', lineHeight: 1.4,
             transition: 'border-color 0.2s ease',
           }}

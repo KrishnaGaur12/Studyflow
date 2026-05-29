@@ -43,7 +43,7 @@ function StatCard({ icon: Icon, label, value, accent }: { icon: typeof Cpu; labe
         borderRadius: 24,
         padding: 24,
         display: 'flex', flexDirection: 'column', gap: 16,
-        fontFamily: "'Outfit', sans-serif",
+        fontFamily: "'Manrope', sans-serif",
         background: 'rgba(255, 255, 255, 0.65)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
@@ -73,7 +73,7 @@ function StatCard({ icon: Icon, label, value, accent }: { icon: typeof Cpu; labe
           {label}
         </span>
       </div>
-      <div style={{ fontSize: 32, fontWeight: 700, color: '#1e1b4b', fontFamily: "'Outfit', sans-serif", fontVariantNumeric: 'tabular-nums' }}>
+      <div style={{ fontSize: 32, fontWeight: 700, color: '#1e1b4b', fontFamily: "'Manrope', sans-serif", fontVariantNumeric: 'tabular-nums' }}>
         {value}
       </div>
     </div>
@@ -141,7 +141,7 @@ export default function Dashboard() {
 
   return (
     <RouteGuard>
-      <div style={{ minHeight: '100vh', background: 'transparent', fontFamily: "'Outfit', sans-serif" }}>
+      <div style={{ minHeight: '100vh', background: 'transparent', fontFamily: "'Manrope', sans-serif" }}>
         <TopNav />
         <div style={{
           maxWidth: 960,
@@ -172,7 +172,7 @@ export default function Dashboard() {
                 )}
                 <h1 style={{ 
                   fontSize: 42, fontWeight: 700, 
-                  fontFamily: "'Playfair Display', serif",
+                  fontFamily: "'Manrope', sans-serif",
                   color: '#1e1b4b', letterSpacing: '-0.02em',
                 }}>
                   Your Activity
@@ -209,7 +209,7 @@ export default function Dashboard() {
             <div>
               <h2 style={{ 
                 fontSize: 24, fontWeight: 700, color: '#1e1b4b', marginBottom: 24,
-                fontFamily: "'Playfair Display', serif"
+                fontFamily: "'Manrope', sans-serif"
               }}>
                 Session history
               </h2>

@@ -87,7 +87,7 @@ export function RoomCard({ room, onClick }: RoomCardProps) {
         cursor: 'pointer',
         transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
         display: 'flex', flexDirection: 'column', gap: 20,
-        fontFamily: "'Outfit', sans-serif",
+        fontFamily: "'Manrope', sans-serif",
       }}
     >
       <div>
@@ -101,7 +101,7 @@ export function RoomCard({ room, onClick }: RoomCardProps) {
           }} />
           <span style={{ 
             fontSize: 22, fontWeight: 700, color: '#1e1b4b', 
-            fontFamily: "'Playfair Display', serif", letterSpacing: '-0.02em',
+            fontFamily: "'Manrope', sans-serif", letterSpacing: '-0.02em',
             lineHeight: 1.2 
           }}>
             {room.name}

@@ -33,46 +33,29 @@ export default function Landing() {
 
       {/* Content wrapper */}
       <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-        
+
+        {/* Absolutely positioned Logo */}
+        <img
+          src="/logo.png"
+          alt="StudyFlow Logo"
+          style={{
+            position: 'absolute',
+            top: '20px',
+            left: '20px',
+            height: '100px',
+            objectFit: 'contain',
+            filter: 'invert(1) brightness(2)',
+            zIndex: 20
+          }}
+        />
+
         {/* Header Navigation */}
         <header style={{
           display: 'flex',
-          justifyContent: 'space-between',
+          justifyContent: 'flex-end',
           alignItems: 'center',
           padding: '28px 60px',
         }}>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px'
-          }}>
-            <img src="/logo.png" alt="StudyFlow Logo" style={{ height: '40px', objectFit: 'contain', filter: 'invert(1) brightness(2)' }} />
-            <div style={{
-              fontSize: '28px',
-              fontWeight: 700,
-              fontFamily: "'Playfair Display', serif",
-              color: '#fff',
-              letterSpacing: '0.5px'
-            }}>
-              StudyFlow
-            </div>
-          </div>
-
-          <nav style={{
-            display: 'flex',
-            gap: '32px',
-            fontSize: '14px',
-            color: '#fff',
-            opacity: 0.9,
-            fontWeight: 400,
-            letterSpacing: '0.3px'
-          }}>
-            <span style={{ cursor: 'pointer', transition: 'opacity 0.2s' }} onMouseOver={e => e.currentTarget.style.opacity = '0.6'} onMouseOut={e => e.currentTarget.style.opacity = '1'}>Home</span>
-            <span style={{ cursor: 'pointer', transition: 'opacity 0.2s' }} onMouseOver={e => e.currentTarget.style.opacity = '0.6'} onMouseOut={e => e.currentTarget.style.opacity = '1'}>Studio</span>
-            <span style={{ cursor: 'pointer', transition: 'opacity 0.2s' }} onMouseOver={e => e.currentTarget.style.opacity = '0.6'} onMouseOut={e => e.currentTarget.style.opacity = '1'}>About</span>
-            <span style={{ cursor: 'pointer', transition: 'opacity 0.2s' }} onMouseOver={e => e.currentTarget.style.opacity = '0.6'} onMouseOut={e => e.currentTarget.style.opacity = '1'}>Journal</span>
-            <span style={{ cursor: 'pointer', transition: 'opacity 0.2s' }} onMouseOver={e => e.currentTarget.style.opacity = '0.6'} onMouseOut={e => e.currentTarget.style.opacity = '1'}>Reach Us</span>
-          </nav>
 
           <Link href="/login" style={{
             padding: '10px 24px',
@@ -86,8 +69,18 @@ export default function Landing() {
             backgroundColor: 'rgba(255,255,255,0.05)',
             backdropFilter: 'blur(8px)',
             WebkitBackdropFilter: 'blur(8px)',
-          }}>
-            Begin Journey
+            fontFamily: "'Manrope', sans-serif",
+          }}
+            onMouseEnter={e => {
+              e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.15)';
+              e.currentTarget.style.transform = 'translateY(-1px)';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.05)';
+              e.currentTarget.style.transform = 'translateY(0)';
+            }}
+          >
+            Login
           </Link>
         </header>
 
@@ -97,35 +90,39 @@ export default function Landing() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'center',
+          justifyContent: 'flex-start',
           textAlign: 'center',
           padding: '0 24px',
-          paddingBottom: '10vh'
+          marginTop: '4vh'
         }}>
           <h1 style={{
             fontFamily: "'Playfair Display', serif",
-            fontSize: '4.5rem',
-            fontWeight: 500,
+            fontSize: '5.5rem',
+            fontWeight: 400,
             color: '#fff',
             marginBottom: '24px',
             letterSpacing: '-1px',
             textShadow: '0 4px 12px rgba(0,0,0,0.3)',
-            maxWidth: '900px',
+            maxWidth: '1000px',
             lineHeight: 1.1
           }}>
-            Where dreams rise through the silence.
+            <span>Where </span>
+            <span style={{ color: 'rgba(255, 255, 255, 0.6)' }}>dreams </span>
+            <span>rise </span>
+            <span style={{ color: 'rgba(255, 255, 255, 0.6)' }}>through the silence.</span>
           </h1>
           <p style={{
+            fontFamily: "'Manrope', sans-serif",
             fontSize: '1.05rem',
             color: 'rgba(255, 255, 255, 0.85)',
-            maxWidth: '650px',
+            maxWidth: '700px',
             lineHeight: 1.6,
-            marginBottom: '48px',
+            marginBottom: '32px',
             fontWeight: 400,
             textShadow: '0 2px 8px rgba(0,0,0,0.3)',
           }}>
-            Study alone and you drift. Study together and you fly.<br/>
-            StudyFlow gives you real-time study rooms, shared focus timers, and the accountability that turns intentions into results.
+            We're designing tools for deep thinkers, bold creators, and quiet rebels. Amid<br />
+            the chaos, we build digital spaces for sharp focus and inspired work.
           </p>
 
           <Link href="/login" style={{
@@ -140,8 +137,20 @@ export default function Landing() {
             backgroundColor: 'transparent',
             backdropFilter: 'blur(8px)',
             WebkitBackdropFilter: 'blur(8px)',
-            letterSpacing: '0.5px'
-          }}>
+            letterSpacing: '0.5px',
+            fontFamily: "'Manrope', sans-serif",
+          }}
+            onMouseEnter={e => {
+              e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.15)';
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(255,255,255,0.1)';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.backgroundColor = 'transparent';
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+          >
             Begin Journey
           </Link>
         </main>

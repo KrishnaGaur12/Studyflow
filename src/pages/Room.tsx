@@ -334,7 +334,7 @@ export default function Room() {
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           padding: '0 32px', gap: 16,
           zIndex: 30,
-          fontFamily: "'Outfit', sans-serif",
+          fontFamily: "'Manrope', sans-serif",
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             {room && (
@@ -407,7 +407,7 @@ export default function Room() {
           gap: 24,
           overflow: 'hidden',
           boxSizing: 'border-box',
-          fontFamily: "'Outfit', sans-serif",
+          fontFamily: "'Manrope', sans-serif",
         }}>
           <PresenceSidebar members={members} currentUserId={user?.id || ''} isAdmin={isAdmin} onKick={handleKick} />
           <Timer roomId={roomId} isAdmin={isAdmin} currentUserId={user?.id || ''} myStatus={myStatus} onStatusChange={setMyStatus} />
@@ -488,7 +488,7 @@ function Modal({ children, onClose }: { children: React.ReactNode; onClose: () =
         border: '1px solid rgba(165, 180, 252, 0.4)',
         boxShadow: '0 24px 48px rgba(30, 27, 75, 0.15)',
         zIndex: 101, width: '90%', maxWidth: 440,
-        fontFamily: "'Outfit', sans-serif",
+        fontFamily: "'Manrope', sans-serif",
       }}>
         {children}
       </div>
@@ -519,5 +519,5 @@ function AccentBtn({ children, onClick, testId }: { children: React.ReactNode; o
     </button>
   );
 }
-const mTitle: React.CSSProperties = { fontSize: 24, fontWeight: 700, color: '#1e1b4b', marginBottom: 12, fontFamily: "'Playfair Display', serif", letterSpacing: '-0.02em' };
+const mTitle: React.CSSProperties = { fontSize: 24, fontWeight: 700, color: '#1e1b4b', marginBottom: 12, fontFamily: "'Manrope', sans-serif", letterSpacing: '-0.02em' };
 const mBody: React.CSSProperties = { fontSize: 15, color: '#4f46e5', lineHeight: 1.6 };

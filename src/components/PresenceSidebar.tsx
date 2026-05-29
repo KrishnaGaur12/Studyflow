@@ -80,7 +80,7 @@ export function PresenceSidebar({ members, currentUserId, isAdmin, onKick }: Pre
       height: '100%',
       overflowY: 'auto',
       flexShrink: 0,
-      fontFamily: "'Outfit', sans-serif",
+      fontFamily: "'Manrope', sans-serif",
       paddingBottom: 16,
     }}>
       <div style={{ padding: '24px 20px 16px' }}>
@@ -192,7 +192,7 @@ export function PresenceSidebar({ members, currentUserId, isAdmin, onKick }: Pre
                           background: 'none', border: 'none', cursor: 'pointer',
                           borderRadius: 8,
                           color: '#ef4444', fontSize: 14, fontWeight: 600,
-                          fontFamily: "'Outfit', sans-serif",
+                          fontFamily: "'Manrope', sans-serif",
                           transition: 'background 0.2s ease',
                         }}
                         onMouseEnter={e => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.05)'}

@@ -111,7 +111,7 @@ export default function Join() {
     <div style={{
       minHeight: '100vh', background: 'transparent',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
-      padding: 24, fontFamily: "'Outfit', sans-serif",
+      padding: 24, fontFamily: "'Manrope', sans-serif",
     }}>
       <div style={{
         display: 'flex', flexDirection: 'column', alignItems: 'center',
@@ -126,7 +126,7 @@ export default function Join() {
         {error ? (
           <>
             <AlertCircle size={48} style={{ color: '#ef4444', marginBottom: 8 }} />
-            <h2 style={{ fontSize: 24, fontWeight: 700, color: '#1e1b4b', fontFamily: "'Playfair Display', serif" }}>
+            <h2 style={{ fontSize: 24, fontWeight: 700, color: '#1e1b4b', fontFamily: "'Manrope', sans-serif" }}>
               Invite not valid
             </h2>
             <p style={{ fontSize: 15, color: '#4f46e5', lineHeight: 1.6, marginBottom: 16 }}>{error}</p>
@@ -140,7 +140,7 @@ export default function Join() {
                 fontSize: 15, fontWeight: 600, cursor: 'pointer',
                 boxShadow: '0 4px 14px rgba(79, 70, 229, 0.3)',
                 transition: 'all 0.2s ease',
-                fontFamily: "'Outfit', sans-serif",
+                fontFamily: "'Manrope', sans-serif",
               }}
               onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(79, 70, 229, 0.4)'; }}
               onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(79, 70, 229, 0.3)'; }}

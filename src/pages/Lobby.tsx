@@ -90,7 +90,7 @@ export default function Lobby() {
 
   return (
     <RouteGuard>
-      <div style={{ minHeight: '100vh', background: 'transparent', fontFamily: "'Outfit', sans-serif" }}>
+      <div style={{ minHeight: '100vh', background: 'transparent', fontFamily: "'Manrope', sans-serif" }}>
         <TopNav />
         <div style={{
           maxWidth: 1200,
@@ -118,7 +118,7 @@ export default function Lobby() {
               <h1 style={{
                 fontSize: 42, fontWeight: 700,
                 color: '#1e1b4b', letterSpacing: '-0.02em',
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "'Manrope', sans-serif",
                 marginBottom: 8,
               }}>
                 Your Rooms
@@ -141,7 +141,7 @@ export default function Lobby() {
                     borderRight: 'none',
                     borderRadius: '12px 0 0 12px',
                     outline: 'none',
-                    fontFamily: "'Outfit', sans-serif",
+                    fontFamily: "'Manrope', sans-serif",
                     transition: 'border-color 0.2s ease',
                   }}
                   onFocus={e => e.currentTarget.style.borderColor = '#6366f1'}
@@ -177,7 +177,7 @@ export default function Lobby() {
                   display: 'flex', alignItems: 'center', gap: 10,
                   boxShadow: '0 4px 14px rgba(79, 70, 229, 0.3)',
                   transition: 'all 0.2s ease',
-                  fontFamily: "'Outfit', sans-serif",
+                  fontFamily: "'Manrope', sans-serif",
                 }}
                 onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(79, 70, 229, 0.4)'; }}
                 onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(79, 70, 229, 0.3)'; }}
@@ -219,7 +219,7 @@ export default function Lobby() {
               }}>
                 <Users size={40} style={{ color: '#818cf8', strokeWidth: 1.5 }} />
               </div>
-              <h2 style={{ fontSize: 24, fontWeight: 700, color: '#1e1b4b', fontFamily: "'Playfair Display', serif" }}>
+              <h2 style={{ fontSize: 24, fontWeight: 700, color: '#1e1b4b', fontFamily: "'Manrope', sans-serif" }}>
                 No rooms yet
               </h2>
               <p style={{ fontSize: 16, color: '#6366f1', maxWidth: 320, lineHeight: 1.6 }}>
@@ -235,7 +235,7 @@ export default function Lobby() {
                   fontSize: 15, fontWeight: 600, cursor: 'pointer',
                   boxShadow: '0 4px 14px rgba(79, 70, 229, 0.3)',
                   transition: 'all 0.2s ease',
-                  fontFamily: "'Outfit', sans-serif",
+                  fontFamily: "'Manrope', sans-serif",
                 }}
                 onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(79, 70, 229, 0.4)'; }}
                 onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(79, 70, 229, 0.3)'; }}

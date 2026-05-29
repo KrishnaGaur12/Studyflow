@@ -69,7 +69,7 @@ export default function Signup() {
         minHeight: '100vh', background: 'transparent',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: '24px',
-        fontFamily: "'Outfit', sans-serif",
+        fontFamily: "'Manrope', sans-serif",
       }}>
         <div style={{ width: '100%', maxWidth: 440 }}>
           <div style={{
@@ -77,7 +77,7 @@ export default function Signup() {
             justifyContent: 'center', marginBottom: 32,
           }}>
             <img src="/logo.png" alt="StudyFlow" style={{ height: 40, objectFit: 'contain', mixBlendMode: 'multiply' }} />
-            <span style={{ fontSize: 26, fontWeight: 700, color: '#1e1b4b', fontFamily: "'Playfair Display', serif", letterSpacing: '-0.02em' }}>
+            <span style={{ fontSize: 26, fontWeight: 700, color: '#1e1b4b', fontFamily: "'Manrope', sans-serif", letterSpacing: '-0.02em' }}>
               StudyFlow
             </span>
           </div>
@@ -99,7 +99,7 @@ export default function Signup() {
               fontSize: 28, fontWeight: 700,
               color: '#1e1b4b', marginBottom: 8,
               letterSpacing: '-0.02em',
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "'Manrope', sans-serif",
               textAlign: 'center',
             }}>
               Create account
@@ -123,7 +123,7 @@ export default function Signup() {
                   color: '#1e1b4b',
                   boxShadow: '0 2px 8px rgba(99, 102, 241, 0.05)',
                   transition: 'all 0.2s ease',
-                  fontFamily: "'Outfit', sans-serif",
+                  fontFamily: "'Manrope', sans-serif",
                 }}
                 onMouseEnter={e => (e.currentTarget.style.transform = 'translateY(-2px)', e.currentTarget.style.boxShadow = '0 6px 16px rgba(99, 102, 241, 0.1)')}
                 onMouseLeave={e => (e.currentTarget.style.transform = 'none', e.currentTarget.style.boxShadow = '0 2px 8px rgba(99, 102, 241, 0.05)')}
@@ -222,7 +222,7 @@ export default function Signup() {
                   boxShadow: '0 4px 14px rgba(79, 70, 229, 0.3)',
                   transition: 'all 0.2s ease',
                   opacity: loading || !displayName.trim() ? 0.7 : 1,
-                  fontFamily: "'Outfit', sans-serif",
+                  fontFamily: "'Manrope', sans-serif",
                 }}
                 onMouseEnter={e => { if (!loading && displayName.trim()) { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(79, 70, 229, 0.4)'; } }}
                 onMouseLeave={e => { if (!loading && displayName.trim()) { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(79, 70, 229, 0.3)'; } }}
@@ -258,7 +258,7 @@ const fieldStyle: React.CSSProperties = {
   border: '1px solid rgba(165, 180, 252, 0.4)',
   borderRadius: 12,
   outline: 'none', boxSizing: 'border-box',
-  fontFamily: "'Outfit', sans-serif",
+  fontFamily: "'Manrope', sans-serif",
   transition: 'border-color 0.2s ease, background 0.2s ease',
 };
 
