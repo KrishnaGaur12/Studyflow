@@ -10,7 +10,7 @@ StudyFlow is a premium, real-time collaborative study platform that provides use
 *   **Synchronized Pomodoro Timers**: Shared 25-minute focus timers controlled by room hosts, perfectly synchronized across all participants using Supabase Realtime.
 *   **Live Presence & Status Tracking**: See exactly who is currently in the room, along with their active status (Live, Idle, etc.).
 *   **Real-time Chat**: Instant messaging within study rooms to communicate without breaking focus.
-*   **Customizable User Profiles**: Upload custom profile pictures, update display names, usernames, and favorite quotes.
+*   **Customizable User Profiles**: Dedicated profile page to select custom profile pictures, update display names, usernames, and favorite quotes.
 *   **Session History & Analytics**: Dashboard tracking total study time, number of sessions, messages sent, rooms joined, and historical activity data visualized with vibrant, minimal stat cards.
 *   **Authentication**: Secure email/password and Google OAuth authentication using Supabase.
 
@@ -22,7 +22,7 @@ StudyFlow is a premium, real-time collaborative study platform that provides use
 *   **Styling**: Vanilla CSS (CSS Variables, Flexbox/Grid) with custom frosted glass UI design
 *   **Icons**: Lucide React
 *   **Smooth Scrolling**: React Lenis
-*   **Backend & Database**: Supabase (PostgreSQL, Storage, Auth)
+*   **Backend & Database**: Supabase (PostgreSQL, Auth)
 *   **Real-time Capabilities**: Supabase Realtime Channels (Presence & Database WebSockets)
 *   **Background Effects**: Vanta.js (FOG) with Three.js
 
@@ -60,14 +60,9 @@ VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 
 Execute the SQL commands found in `supabase-schema.sql` in your Supabase SQL Editor to provision the required tables, row-level security (RLS) policies, and database functions.
 
-### 5. Storage Setup (For Avatars)
+### 5. Setup Avatar Images
 
-To enable profile picture uploads:
-1. Go to your **Supabase Dashboard** -> **Storage**.
-2. Create a new bucket named exactly: `avatars`.
-3. Check the **Public bucket** option.
-4. Go to **Storage -> Policies** and create a new policy under the `avatars` bucket.
-5. Name it `Allow authenticated uploads`, allow **SELECT**, **INSERT**, and **UPDATE** operations, and target the `authenticated` role.
+Ensure you place two image files named `pfp1.png` and `pfp2.png` into the `public/` directory. These will be available for users to select on their Profile page.
 
 ### 6. Run the Development Server
 

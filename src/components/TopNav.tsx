@@ -11,7 +11,6 @@ interface TopNavProps {
 
 export function TopNav({ roomName, hostedBy, onLeave }: TopNavProps) {
   const { profile, signOut } = useAuth();
-  const [menuOpen, setMenuOpen] = useState(false);
   const [, setLocation] = useLocation();
 
   const handleSignOut = async () => {
@@ -114,73 +113,44 @@ export function TopNav({ roomName, hostedBy, onLeave }: TopNavProps) {
           <span>Stats</span>
         </Link>
 
-        {/* Avatar/menu */}
-        <div style={{ position: 'relative' }}>
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            data-testid="button-user-menu"
-            style={{
-              width: 40, height: 40, borderRadius: 12,
-              background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)',
-              border: 'none',
-              cursor: 'pointer',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              color: '#fff',
-              fontSize: 14, fontWeight: 700,
-              boxShadow: '0 2px 8px rgba(79, 70, 229, 0.25)',
-              transition: 'transform 0.15s ease, box-shadow 0.15s ease',
-            }}
-            onMouseDown={e => (e.currentTarget.style.transform = 'scale(0.95)')}
-            onMouseUp={e => (e.currentTarget.style.transform = 'scale(1)')}
-          >
-            {profile?.display_name?.charAt(0).toUpperCase() || <User size={16} />}
-          </button>
+        <Link
+          href="/profile"
+          style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+            padding: '0 16px', height: 40, borderRadius: 999,
+            color: '#059669', textDecoration: 'none',
+            background: '#d1fae5',
+            fontWeight: 700, fontSize: 14,
+            transition: 'all 0.2s ease',
+            fontFamily: "'Manrope', sans-serif"
+          }}
+          onMouseEnter={e => e.currentTarget.style.background = '#a7f3d0'}
+          onMouseLeave={e => e.currentTarget.style.background = '#d1fae5'}
+          title="Profile"
+        >
+          <User size={18} strokeWidth={2.5} />
+          <span>Profile</span>
+        </Link>
 
-          {menuOpen && (
-            <>
-              <div
-                onClick={() => setMenuOpen(false)}
-                style={{
-                  position: 'fixed', inset: 0, zIndex: 60,
-                }}
-              />
-              <div style={{
-                position: 'absolute', top: 48, right: 0,
-                background: 'rgba(255, 255, 255, 0.9)',
-                backdropFilter: 'blur(20px)',
-                WebkitBackdropFilter: 'blur(20px)',
-                border: '1px solid rgba(165, 180, 252, 0.25)',
-                borderRadius: 16,
-                boxShadow: '0 12px 40px rgba(99, 102, 241, 0.12)',
-                padding: '6px',
-                minWidth: 200,
-                zIndex: 70,
-              }}>
-                <div style={{ padding: '12px 14px 8px', borderBottom: '1px solid rgba(165, 180, 252, 0.15)', marginBottom: 4 }}>
-                  <div style={{ fontSize: 14, fontWeight: 600, color: '#1e1b4b' }}>{profile?.display_name}</div>
-                </div>
-                <button
-                  onClick={handleSignOut}
-                  data-testid="button-sign-out"
-                  style={{
-                    display: 'flex', alignItems: 'center', gap: 8,
-                    width: '100%', padding: '10px 14px',
-                    background: 'none', border: 'none', cursor: 'pointer',
-                    borderRadius: 10,
-                    color: '#dc2626', fontSize: 14, fontWeight: 500,
-                    fontFamily: "'Manrope', sans-serif",
-                    transition: 'background 0.15s ease',
-                  }}
-                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(220, 38, 38, 0.06)')}
-                  onMouseLeave={e => (e.currentTarget.style.background = 'none')}
-                >
-                  <LogOut size={15} />
-                  Sign out
-                </button>
-              </div>
-            </>
-          )}
-        </div>
+        <button
+          onClick={handleSignOut}
+          data-testid="button-sign-out"
+          style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+            padding: '0 16px', height: 40, borderRadius: 999,
+            color: '#dc2626', border: 'none',
+            background: '#fee2e2',
+            fontWeight: 700, fontSize: 14, cursor: 'pointer',
+            transition: 'all 0.2s ease',
+            fontFamily: "'Manrope', sans-serif"
+          }}
+          onMouseEnter={e => e.currentTarget.style.background = '#fecaca'}
+          onMouseLeave={e => e.currentTarget.style.background = '#fee2e2'}
+          title="Sign out"
+        >
+          <LogOut size={18} strokeWidth={2.5} />
+          <span>Sign out</span>
+        </button>
       </div>
     </nav>
   );

@@ -8,6 +8,7 @@ import Signup from '@/pages/Signup';
 import Lobby from '@/pages/Lobby';
 import Room from '@/pages/Room';
 import Dashboard from '@/pages/Dashboard';
+import Profile from '@/pages/Profile';
 import Join from '@/pages/Join';
 import Landing from '@/pages/Landing';
 
@@ -24,6 +25,7 @@ function Router() {
       <Route path="/join/:code" component={Join} />
       <Route path="/rooms/:id" component={Room} />
       <Route path="/dashboard" component={Dashboard} />
+      <Route path="/profile" component={Profile} />
       <Route path="/lobby" component={Lobby} />
       <Route path="/" component={Landing} />
       <Route component={Landing} />
