@@ -25,6 +25,7 @@ Students preparing for exams or interviews often struggle to stay consistent whi
 - Create **open rooms** (visible to everyone) or **private invite-only rooms**
 - Join private rooms via a unique invite code
 - Room host controls who can start and stop sessions
+- personalized rooms (private/personal) and global open rooms — create, join, or invite via code; host controls session start/stop
 
 ### Synchronized Pomodoro Timer
 - Shared **25-minute focus timer** controlled by the room host
@@ -61,87 +62,41 @@ Students preparing for exams or interviews often struggle to stay consistent whi
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Frontend Framework | React 18 |
-| Build Tool | Vite |
-| Routing | Wouter |
-| Styling | Vanilla CSS — CSS Variables, Flexbox, Grid |
-| Icons | Lucide React |
-| Smooth Scrolling | React Lenis |
-| Backend & Database | Supabase (PostgreSQL) |
-| Authentication | Supabase Auth (Google OAuth + Email) |
-| Real-time | Supabase Realtime Channels (Presence + DB Webhooks) |
-| Background Effects | Vanta.js (FOG) + Three.js |
-| Deployment | Vercel |
+ - Frontend: React 18, Vite, Wouter, TypeScript
+ - Styling & UX: CSS variables, Flexbox, Grid, Lucide React (icons), React Lenis, Three.js + Vanta.js
+ - Backend & Realtime: Supabase (Postgres, Auth, Realtime, Storage)
+ - Deployment & tooling: Vercel, npm
 
----
-## Project Structure
+ Full tech list (concise)
+ - React 18, TypeScript, Vite, Wouter
+ - Supabase (Postgres, Auth, Realtime, Storage)
+ - Three.js, Vanta.js (FOG), React Lenis
+ - CSS variables, Flexbox, Grid, Lucide React
+ - Vercel, npm
 
-StudysFlows/
-├── public/
-│   ├── pfp1.png
-│   └── pfp2.png
-├── src/
-│   ├── components/
-│   │   ├── Background3D.tsx
-│   │   ├── Chat.tsx
-│   │   ├── CreateRoomModal.tsx
-│   │   ├── Logo.tsx
-│   │   ├── PresenceSidebar.tsx
-│   │   ├── RoomCard.tsx
-│   │   ├── RouteGuard.tsx
-│   │   ├── Timer.tsx
-│   │   └── TopNav.tsx
-│   ├── context/
-│   │   ├── AuthContext.tsx
-│   │   ├── ThemeContext.tsx
-│   │   └── ToastContext.tsx
-│   ├── lib/
-│   │   └── supabase.ts
-│   ├── pages/
-│   │   ├── Dashboard.tsx
-│   │   ├── Join.tsx
-│   │   ├── Landing.tsx
-│   │   ├── Lobby.tsx
-│   │   ├── Login.tsx
-│   │   ├── Profile.tsx
-│   │   ├── Room.tsx
-│   │   └── Signup.tsx
-│   ├── styles/
-│   │   └── tokens.css
-│   ├── App.tsx
-│   ├── index.css
-│   └── main.tsx
-├── .env
-├── .env.example
-├── .gitignore
-├── index.html
-├── package.json
-├── supabase-schema.sql
-├── tsconfig.json
-├── vercel.json
-└── vite.config.ts
+ Project (essential)
+ - public/                — static assets (pfp images, etc.)
+ - src/components/        — UI components
+ - src/pages/             — route pages (Room, Lobby, Dashboard...)
+ - src/context/           — React contexts (Auth, Theme, Toast)
+ - src/lib/supabase.ts    — Supabase client
+ - src/styles/            — design tokens and global CSS
+ - package.json, vite.config.ts, tsconfig.json, README.md
 
-## Setup
+ Quick setup
+ ```bash
+ npm install
+ cp .env.example .env
+ # set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in .env
+ # run the SQL schema in Supabase
+ npm run dev
+ ```
 
-1. Clone the repo and run `npm install`
-2. Create a `.env` file:
-```env
-VITE_SUPABASE_URL=your_supabase_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-```
-3. Run `supabase-schema.sql` in your Supabase SQL Editor
-4. Place `pfp1.png` and `pfp2.png` in the `public/` folder
-5. Run `npm run dev`
+ User stories (implemented)
+ - Create/join rooms ✅
+ - Invite users ✅
+ - Start shared sessions ✅
+ - Track session time ✅
+ - Real-time chat & presence ✅
 
-## User Stories Covered
-
-| Story | Status |
-|---|---|
-| Create study rooms | ✅ |
-| Invite other users | ✅ |
-| Start study sessions | ✅ |
-| Track session durations | ✅ |
-| Communicate within the room | ✅ |
-| View room activity history | ✅ |
+ ---
