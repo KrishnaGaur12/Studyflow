@@ -4,7 +4,6 @@ import { Loader2 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { RouteGuard } from '@/components/RouteGuard';
 import { PENDING_INVITE_KEY } from '@/pages/Join';
-import { Logo } from '@/components/Logo';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -36,7 +35,7 @@ export default function Login() {
       sessionStorage.removeItem(PENDING_INVITE_KEY);
       setLocation(`/join/${pendingInvite}`);
     } else {
-      setLocation('/');
+      setLocation('/lobby');
     }
   };
 
@@ -45,39 +44,78 @@ export default function Login() {
       <div style={{
         minHeight: '100vh', background: 'transparent',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        padding: 'var(--sr-space-5)',
+        padding: '24px',
+        fontFamily: "'Outfit', sans-serif",
       }}>
-        <div style={{ width: '100%', maxWidth: 400 }}>
+        <div style={{ width: '100%', maxWidth: 440 }}>
           <div style={{
-            display: 'flex', alignItems: 'center', gap: 10,
-            justifyContent: 'center', marginBottom: 'var(--sr-space-7)',
+            display: 'flex', alignItems: 'center', gap: 12,
+            justifyContent: 'center', marginBottom: 32,
           }}>
-            <Logo style={{ width: 28, height: 28, color: 'var(--sr-accent)' }} />
-            <span style={{ fontSize: 'var(--sr-text-xl)', fontWeight: 700, color: 'var(--sr-fg-1)' }}>Study Rooms</span>
+            <img src="/logo.png" alt="StudyFlow" style={{ height: 40, objectFit: 'contain', mixBlendMode: 'multiply' }} />
+            <span style={{ fontSize: 26, fontWeight: 700, color: '#1e1b4b', fontFamily: "'Playfair Display', serif", letterSpacing: '-0.02em' }}>
+              StudyFlow
+            </span>
           </div>
 
           <div 
-            className="sr-glass sr-nodes" 
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
             style={{
-              padding: 'var(--sr-space-6)',
-              borderColor: hovered ? 'var(--sr-accent)' : 'var(--sr-glass-border)',
-              boxShadow: hovered ? '0 0 15px var(--sr-accent-soft)' : 'var(--sr-glass-shadow)',
-              transition: 'all var(--sr-duration-fast) var(--sr-ease-out)',
+              background: 'rgba(255, 255, 255, 0.65)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              borderRadius: 24,
+              padding: '40px 32px',
+              border: '1px solid rgba(165, 180, 252, 0.3)',
+              boxShadow: hovered ? '0 20px 40px rgba(79, 70, 229, 0.12)' : '0 10px 30px rgba(99, 102, 241, 0.08)',
+              transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
           }}>
             <h1 style={{
-              fontSize: 'var(--sr-text-2xl)', fontWeight: 700,
-              color: 'var(--sr-fg-1)', marginBottom: 8,
-              letterSpacing: 'var(--sr-tracking-tight)',
+              fontSize: 28, fontWeight: 700,
+              color: '#1e1b4b', marginBottom: 8,
+              letterSpacing: '-0.02em',
+              fontFamily: "'Playfair Display', serif",
+              textAlign: 'center',
             }}>
               Welcome back
             </h1>
-            <p style={{ fontSize: 'var(--sr-text-base)', color: 'var(--sr-fg-2)', marginBottom: 'var(--sr-space-6)' }}>
+            <p style={{ fontSize: 15, color: '#4f46e5', marginBottom: 32, textAlign: 'center', fontWeight: 500 }}>
               Sign in to your account to continue studying.
             </p>
 
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sr-space-4)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 24 }}>
+              <button
+                type="button"
+                onClick={() => supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: `${window.location.origin}/lobby` } })}
+                style={{
+                  height: 48,
+                  cursor: 'pointer',
+                  borderRadius: 12,
+                  fontSize: 15, fontWeight: 600,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12,
+                  background: '#fff',
+                  border: '1px solid rgba(165, 180, 252, 0.4)',
+                  color: '#1e1b4b',
+                  boxShadow: '0 2px 8px rgba(99, 102, 241, 0.05)',
+                  transition: 'all 0.2s ease',
+                  fontFamily: "'Outfit', sans-serif",
+                }}
+                onMouseEnter={e => (e.currentTarget.style.transform = 'translateY(-2px)', e.currentTarget.style.boxShadow = '0 6px 16px rgba(99, 102, 241, 0.1)')}
+                onMouseLeave={e => (e.currentTarget.style.transform = 'none', e.currentTarget.style.boxShadow = '0 2px 8px rgba(99, 102, 241, 0.05)')}
+              >
+                <img src="https://www.google.com/favicon.ico" alt="Google" style={{ width: 18, height: 18 }} />
+                Continue with Google
+              </button>
+              
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, margin: '8px 0' }}>
+                <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, transparent, rgba(165, 180, 252, 0.4))' }} />
+                <span style={{ fontSize: 12, color: '#6366f1', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: 600 }}>Or</span>
+                <div style={{ flex: 1, height: 1, background: 'linear-gradient(270deg, transparent, rgba(165, 180, 252, 0.4))' }} />
+              </div>
+            </div>
+
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
               <Field label="Email">
                 <input
                   type="email"
@@ -87,7 +125,8 @@ export default function Login() {
                   placeholder="you@example.com"
                   data-testid="input-email"
                   style={fieldStyle}
-                  className="sr-network-input"
+                  onFocus={e => e.currentTarget.style.borderColor = '#6366f1'}
+                  onBlur={e => e.currentTarget.style.borderColor = 'rgba(165, 180, 252, 0.4)'}
                 />
               </Field>
 
@@ -100,17 +139,18 @@ export default function Login() {
                   placeholder="••••••••"
                   data-testid="input-password"
                   style={fieldStyle}
-                  className="sr-network-input"
+                  onFocus={e => e.currentTarget.style.borderColor = '#6366f1'}
+                  onBlur={e => e.currentTarget.style.borderColor = 'rgba(165, 180, 252, 0.4)'}
                 />
               </Field>
 
               {errorMsg && (
                 <div style={{
-                  padding: '10px 14px',
-                  background: 'var(--sr-danger-soft)',
-                  border: '1px solid var(--sr-danger)',
-                  borderRadius: 'var(--sr-radius-md)',
-                  fontSize: 13, color: 'var(--sr-danger)', lineHeight: 1.5,
+                  padding: '12px 16px',
+                  background: 'rgba(254, 226, 226, 0.8)',
+                  border: '1px solid rgba(248, 113, 113, 0.4)',
+                  borderRadius: 12,
+                  fontSize: 14, color: '#b91c1c', lineHeight: 1.5,
                 }}>
                   {errorMsg}
                 </div>
@@ -120,23 +160,36 @@ export default function Login() {
                 type="submit"
                 disabled={loading}
                 data-testid="button-sign-in"
-                className="sr-network-button"
                 style={{
-                  height: 44,
+                  height: 48, marginTop: 8,
                   cursor: loading ? 'not-allowed' : 'pointer',
-                  fontSize: 14, fontWeight: 500,
+                  borderRadius: 12, border: 'none',
+                  fontSize: 15, fontWeight: 600,
                   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                  background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)',
+                  color: '#ffffff',
+                  boxShadow: '0 4px 14px rgba(79, 70, 229, 0.3)',
+                  transition: 'all 0.2s ease',
                   opacity: loading ? 0.7 : 1,
+                  fontFamily: "'Outfit', sans-serif",
                 }}
+                onMouseEnter={e => { if (!loading) { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(79, 70, 229, 0.4)'; } }}
+                onMouseLeave={e => { if (!loading) { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(79, 70, 229, 0.3)'; } }}
               >
-                {loading && <Loader2 size={16} style={{ animation: 'spin 0.8s linear infinite' }} />}
+                {loading && <Loader2 size={18} style={{ animation: 'spin 0.8s linear infinite' }} />}
                 {loading ? 'Signing in…' : 'Sign in'}
               </button>
             </form>
 
-            <p style={{ marginTop: 'var(--sr-space-5)', textAlign: 'center', fontSize: 14, color: 'var(--sr-fg-2)' }}>
+            <p style={{ marginTop: 32, textAlign: 'center', fontSize: 14, color: '#6366f1' }}>
               Don't have an account?{' '}
-              <Link href="/signup" style={{ color: 'var(--sr-accent)', textDecoration: 'none', fontWeight: 500 }}>
+              <Link href="/signup" style={{ 
+                color: '#4f46e5', textDecoration: 'none', fontWeight: 700,
+                transition: 'color 0.2s ease'
+              }}
+              onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+              onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+              >
                 Sign up
               </Link>
             </p>
@@ -148,18 +201,23 @@ export default function Login() {
 }
 
 const fieldStyle: React.CSSProperties = {
-  width: '100%', height: 36, padding: '0 12px',
-  color: 'var(--sr-fg-1)', fontSize: 14,
+  width: '100%', height: 48, padding: '0 16px',
+  color: '#1e1b4b', fontSize: 15,
+  background: 'rgba(255, 255, 255, 0.7)',
+  border: '1px solid rgba(165, 180, 252, 0.4)',
+  borderRadius: 12,
   outline: 'none', boxSizing: 'border-box',
+  fontFamily: "'Outfit', sans-serif",
+  transition: 'border-color 0.2s ease, background 0.2s ease',
 };
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
       <label style={{
-        display: 'block', fontSize: 'var(--sr-text-xs)', fontWeight: 500,
-        textTransform: 'uppercase', letterSpacing: 'var(--sr-tracking-caps)',
-        color: 'var(--sr-fg-2)', marginBottom: 8,
+        display: 'block', fontSize: 12, fontWeight: 700,
+        textTransform: 'uppercase', letterSpacing: '1px',
+        color: '#4f46e5', marginBottom: 8,
       }}>
         {label}
       </label>

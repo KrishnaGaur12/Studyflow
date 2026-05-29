@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 // @ts-ignore
-import NET from 'vanta/dist/vanta.net.min';
+import FOG from 'vanta/dist/vanta.fog.min';
 
 export function Background3D() {
   const [vantaEffect, setVantaEffect] = useState<any>(null);
@@ -9,7 +9,7 @@ export function Background3D() {
 
   useEffect(() => {
     if (!vantaEffect) {
-      setVantaEffect(NET({
+      setVantaEffect(FOG({
         el: myRef.current,
         THREE: THREE,
         mouseControls: true,
@@ -17,13 +17,13 @@ export function Background3D() {
         gyroControls: false,
         minHeight: 200.00,
         minWidth: 200.00,
-        scale: 1.00,
-        scaleMobile: 1.00,
-        color: 0x6366f1, // Indigo accent
-        backgroundColor: 0x09090b, // Very dark slate (our sr-bg)
-        points: 10.00,
-        maxDistance: 20.00,
-        spacing: 20.00
+        highlightColor: 0xa5b4fc,
+        midtoneColor: 0xc7d2fe,
+        lowlightColor: 0xe5e7eb,
+        baseColor: 0xffffff,
+        blurFactor: 0.86,
+        speed: 1.50,
+        zoom: 0.60
       }));
     }
     return () => {

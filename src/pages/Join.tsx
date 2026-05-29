@@ -111,34 +111,47 @@ export default function Join() {
     <div style={{
       minHeight: '100vh', background: 'transparent',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
-      padding: 'var(--sr-space-5)',
+      padding: 24, fontFamily: "'Outfit', sans-serif",
     }}>
-      <div className="sr-glass sr-nodes" style={{
+      <div style={{
         display: 'flex', flexDirection: 'column', alignItems: 'center',
-        gap: 16, textAlign: 'center', maxWidth: 360, padding: 'var(--sr-space-6)'
+        gap: 16, textAlign: 'center', maxWidth: 400, padding: 40,
+        background: 'rgba(255, 255, 255, 0.65)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        borderRadius: 24,
+        border: '1px solid rgba(165, 180, 252, 0.3)',
+        boxShadow: '0 10px 30px rgba(99, 102, 241, 0.08)',
       }}>
         {error ? (
           <>
-            <AlertCircle size={40} style={{ color: 'var(--sr-danger)' }} />
-            <h2 style={{ fontSize: 'var(--sr-text-lg)', fontWeight: 600, color: 'var(--sr-fg-1)' }}>
+            <AlertCircle size={48} style={{ color: '#ef4444', marginBottom: 8 }} />
+            <h2 style={{ fontSize: 24, fontWeight: 700, color: '#1e1b4b', fontFamily: "'Playfair Display', serif" }}>
               Invite not valid
             </h2>
-            <p style={{ fontSize: 14, color: 'var(--sr-fg-2)', lineHeight: 1.6 }}>{error}</p>
+            <p style={{ fontSize: 15, color: '#4f46e5', lineHeight: 1.6, marginBottom: 16 }}>{error}</p>
             <button
-              onClick={() => setLocation('/')}
-              className="sr-network-button"
+              onClick={() => setLocation('/lobby')}
               style={{
-                height: 36, padding: '0 20px',
-                fontSize: 14, fontWeight: 500, cursor: 'pointer',
+                height: 48, padding: '0 32px',
+                background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)',
+                color: '#ffffff',
+                border: 'none', borderRadius: 12,
+                fontSize: 15, fontWeight: 600, cursor: 'pointer',
+                boxShadow: '0 4px 14px rgba(79, 70, 229, 0.3)',
+                transition: 'all 0.2s ease',
+                fontFamily: "'Outfit', sans-serif",
               }}
+              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(79, 70, 229, 0.4)'; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(79, 70, 229, 0.3)'; }}
             >
-              Go to lobby
+              Go to dashboard
             </button>
           </>
         ) : (
           <>
-            <Loader2 size={32} style={{ color: 'var(--sr-accent)', animation: 'spin 0.8s linear infinite' }} />
-            <p style={{ fontSize: 14, color: 'var(--sr-fg-2)' }}>Joining room…</p>
+            <Loader2 size={40} style={{ color: '#6366f1', animation: 'spin 0.8s linear infinite', marginBottom: 12 }} />
+            <p style={{ fontSize: 16, color: '#4f46e5', fontWeight: 500 }}>Joining room…</p>
           </>
         )}
       </div>

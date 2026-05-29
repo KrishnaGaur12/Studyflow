@@ -59,15 +59,6 @@ export function Chat({ roomId }: ChatProps) {
     });
   }, []);
 
-  // Fetch & cache a profile, returns display name
-  const getDisplayName = async (userId: string): Promise<string> => {
-    if (profileCache.current.has(userId)) return profileCache.current.get(userId)!;
-    const { data } = await supabase.from('profiles').select('display_name').eq('id', userId).single();
-    const name = data?.display_name || 'Unknown';
-    profileCache.current.set(userId, name);
-    return name;
-  };
-
   // ─── Initial load ────────────────────────────────────────────────────────────
   useEffect(() => {
     let cancelled = false;
@@ -210,7 +201,7 @@ export function Chat({ roomId }: ChatProps) {
     setInput('');
     setSending(true);
     // Reset textarea height
-    if (textareaRef.current) textareaRef.current.style.height = '36px';
+    if (textareaRef.current) textareaRef.current.style.height = '48px';
 
     const { error } = await supabase.from('messages').insert({
       room_id: roomId,
@@ -236,7 +227,7 @@ export function Chat({ roomId }: ChatProps) {
     setInput(e.target.value);
     const el = textareaRef.current;
     if (el) {
-      el.style.height = '36px';
+      el.style.height = '48px';
       el.style.height = `${Math.min(el.scrollHeight, 120)}px`;
     }
   };
@@ -251,39 +242,44 @@ export function Chat({ roomId }: ChatProps) {
   }, []);
 
   return (
-    <div className="sr-glass sr-nodes" style={{
-      width: 'var(--sr-chat-width)',
-      borderRadius: 'var(--sr-radius-xl)',
+    <div style={{
+      width: 340,
+      borderRadius: 24,
+      background: 'rgba(255, 255, 255, 0.4)',
+      backdropFilter: 'blur(20px)',
+      WebkitBackdropFilter: 'blur(20px)',
+      border: '1px solid rgba(165, 180, 252, 0.2)',
       display: 'flex', flexDirection: 'column',
       height: '100%', flexShrink: 0,
-      fontFamily: 'var(--sr-font-sans)',
+      fontFamily: "'Outfit', sans-serif",
       minWidth: 0,
       overflow: 'hidden',
     }}>
       {/* Header */}
       <div style={{
-        height: 48, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 16px',
-        borderBottom: '1px solid var(--sr-border)', flexShrink: 0,
+        height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '0 24px',
+        borderBottom: '1px solid rgba(165, 180, 252, 0.2)', flexShrink: 0,
       }}>
-        <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--sr-fg-1)' }}>Chat</span>
+        <span style={{ fontSize: 13, fontWeight: 700, color: '#6366f1', textTransform: 'uppercase', letterSpacing: '2px' }}>
+          Chat
+        </span>
         {!realtimeOk && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 11, color: 'var(--sr-warning)' }}>
-            <WifiOff size={12} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#f59e0b', fontWeight: 600 }}>
+            <WifiOff size={14} />
             Polling
           </div>
         )}
-        {/* Empty span removed to clear instructions */}
       </div>
 
       {/* Message list */}
-      <div ref={scrollRef} style={{ flex: 1, overflowY: 'auto', padding: '8px 0' }}>
+      <div ref={scrollRef} style={{ flex: 1, overflowY: 'auto', padding: '16px 0' }}>
         {loading && (
-          <div style={{ padding: '0 16px', display: 'flex', flexDirection: 'column', gap: 16, paddingTop: 16 }}>
+          <div style={{ padding: '0 20px', display: 'flex', flexDirection: 'column', gap: 24, paddingTop: 20 }}>
             {[55, 80, 40, 70].map((w, i) => (
-              <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: i % 2 === 0 ? 'flex-start' : 'flex-end', gap: 6 }}>
-                <div className="sr-skeleton" style={{ width: `${w * 0.5}%`, height: 11 }} />
-                <div className="sr-skeleton" style={{ width: `${w}%`, height: 38 }} />
+              <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: i % 2 === 0 ? 'flex-start' : 'flex-end', gap: 8 }}>
+                <div className="sr-skeleton" style={{ width: `${w * 0.5}%`, height: 14, borderRadius: 4 }} />
+                <div className="sr-skeleton" style={{ width: `${w}%`, height: 42, borderRadius: 16 }} />
               </div>
             ))}
           </div>
@@ -292,12 +288,12 @@ export function Chat({ roomId }: ChatProps) {
         {!loading && messages.length === 0 && (
           <div style={{
             display: 'flex', flexDirection: 'column', alignItems: 'center',
-            justifyContent: 'center', height: '80%', gap: 8,
-            color: 'var(--sr-fg-3)', textAlign: 'center', padding: '0 24px',
+            justifyContent: 'center', height: '80%', gap: 12,
+            color: '#818cf8', textAlign: 'center', padding: '0 24px',
           }}>
-            <div style={{ fontSize: 28 }}>💬</div>
-            <div style={{ fontSize: 13, fontWeight: 500 }}>No messages yet</div>
-            <div style={{ fontSize: 12 }}>Be the first to say hi.</div>
+            <div style={{ fontSize: 32 }}>💬</div>
+            <div style={{ fontSize: 16, fontWeight: 600, color: '#4f46e5' }}>No messages yet</div>
+            <div style={{ fontSize: 14 }}>Be the first to say hi.</div>
           </div>
         )}
 
@@ -307,20 +303,20 @@ export function Chat({ roomId }: ChatProps) {
             <div
               key={msg.id}
               style={{
-                padding: '1px 14px',
+                padding: '2px 20px',
                 display: 'flex', flexDirection: 'column',
                 alignItems: isMe ? 'flex-end' : 'flex-start',
               }}
             >
               {msg.showHeader && (
                 <div style={{
-                  fontSize: 11, fontWeight: 600,
-                  color: 'var(--sr-fg-3)',
-                  marginBottom: 3, marginTop: 14,
-                  letterSpacing: '0.02em',
+                  fontSize: 12, fontWeight: 700,
+                  color: '#6366f1',
+                  marginBottom: 6, marginTop: 16,
+                  letterSpacing: '0.5px',
                 }}>
                   {isMe ? 'You' : msg.display_name}
-                  <span style={{ color: 'var(--sr-fg-4)', fontWeight: 400, marginLeft: 6 }}>
+                  <span style={{ color: '#a5b4fc', fontWeight: 500, marginLeft: 8 }}>
                     {formatTime(msg.created_at)}
                   </span>
                 </div>
@@ -328,22 +324,22 @@ export function Chat({ roomId }: ChatProps) {
               <div
                 data-testid={`message-bubble-${msg.id}`}
                 style={{
-                  maxWidth: '82%',
-                  padding: '9px 14px',
-                  borderRadius: '16px',
+                  maxWidth: '85%',
+                  padding: '12px 16px',
+                  borderRadius: 16,
                   borderTopLeftRadius: !isMe && msg.showHeader ? 4 : 16,
                   borderTopRightRadius: isMe && msg.showHeader ? 4 : 16,
                   background: isMe 
-                    ? 'rgba(168, 85, 247, 0.15)' 
-                    : 'rgba(10, 10, 15, 0.4)',
-                  backdropFilter: 'blur(8px)',
-                  WebkitBackdropFilter: 'blur(8px)',
+                    ? 'rgba(79, 70, 229, 0.15)' 
+                    : 'rgba(255, 255, 255, 0.8)',
+                  backdropFilter: 'blur(20px)',
+                  WebkitBackdropFilter: 'blur(20px)',
                   border: isMe 
-                    ? '1px solid rgba(192, 132, 252, 0.6)' 
-                    : '1px solid rgba(99, 102, 241, 0.3)',
-                  boxShadow: isMe ? '0 0 10px rgba(192, 132, 252, 0.2)' : '0 2px 8px rgba(0,0,0,0.05)',
-                  color: isMe ? '#ffffff' : 'var(--sr-fg-1)',
-                  fontSize: 14, lineHeight: 1.55,
+                    ? '1px solid rgba(79, 70, 229, 0.2)' 
+                    : '1px solid rgba(165, 180, 252, 0.4)',
+                  boxShadow: isMe ? '0 4px 12px rgba(79, 70, 229, 0.1)' : '0 4px 12px rgba(99, 102, 241, 0.05)',
+                  color: isMe ? '#1e1b4b' : '#1e1b4b',
+                  fontSize: 14, lineHeight: 1.5,
                   wordBreak: 'break-word',
                   whiteSpace: 'pre-wrap',
                 }}
@@ -357,40 +353,52 @@ export function Chat({ roomId }: ChatProps) {
 
       {/* Composer */}
       <div style={{
-        borderTop: '1px solid var(--sr-border)',
-        padding: '10px 12px',
-        display: 'flex', gap: 8, alignItems: 'flex-end', flexShrink: 0,
+        borderTop: '1px solid rgba(165, 180, 252, 0.2)',
+        padding: '16px 20px',
+        display: 'flex', gap: 12, alignItems: 'flex-end', flexShrink: 0,
+        background: 'rgba(255, 255, 255, 0.3)',
       }}>
         <textarea
           ref={textareaRef}
           value={input}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
-          placeholder="Message… (Enter to send)"
+          placeholder="Message…"
           rows={1}
           data-testid="input-chat-message"
-          className="sr-network-input"
           style={{
-            flex: 1, resize: 'none', height: 36, minHeight: 36, maxHeight: 120,
-            padding: '8px 12px',
-            color: 'var(--sr-fg-1)', fontSize: 14,
-            outline: 'none', fontFamily: 'var(--sr-font-sans)',
+            flex: 1, resize: 'none', height: 48, minHeight: 48, maxHeight: 120,
+            padding: '14px 16px',
+            color: '#1e1b4b', fontSize: 14,
+            background: 'rgba(255, 255, 255, 0.8)',
+            border: '1px solid rgba(165, 180, 252, 0.4)',
+            borderRadius: 12,
+            outline: 'none', fontFamily: "'Outfit', sans-serif",
             boxSizing: 'border-box', lineHeight: 1.4,
+            transition: 'border-color 0.2s ease',
           }}
+          onFocus={e => e.currentTarget.style.borderColor = '#6366f1'}
+          onBlur={e => e.currentTarget.style.borderColor = 'rgba(165, 180, 252, 0.4)'}
         />
         <button
           onClick={sendMessage}
           disabled={!input.trim() || sending}
           data-testid="button-send-message"
           title="Send (Enter)"
-          className="sr-network-button"
           style={{
-            width: 36, height: 36, borderRadius: 10, flexShrink: 0,
+            width: 48, height: 48, borderRadius: 12, flexShrink: 0,
             cursor: input.trim() && !sending ? 'pointer' : 'default',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
+            background: input.trim() && !sending ? 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)' : 'rgba(165, 180, 252, 0.2)',
+            border: 'none',
+            color: input.trim() && !sending ? '#ffffff' : '#818cf8',
+            boxShadow: input.trim() && !sending ? '0 4px 14px rgba(79, 70, 229, 0.3)' : 'none',
+            transition: 'all 0.2s ease',
           }}
+          onMouseEnter={e => { if (input.trim() && !sending) { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(79, 70, 229, 0.4)'; } }}
+          onMouseLeave={e => { if (input.trim() && !sending) { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(79, 70, 229, 0.3)'; } }}
         >
-          <Send size={15} style={{ color: input.trim() && !sending ? 'var(--sr-fg-invert)' : 'var(--sr-fg-4)' }} />
+          <Send size={18} />
         </button>
       </div>
     </div>

@@ -26,7 +26,7 @@ export function RouteGuard({ children, requireAuth = true }: RouteGuardProps) {
     if (requireAuth && !user) {
       setLocation('/login');
     } else if (!requireAuth && user) {
-      setLocation('/');
+      setLocation('/lobby');
     }
   }, [user, isLoading, requireAuth, setLocation]);
 

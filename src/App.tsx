@@ -1,4 +1,4 @@
-import { Switch, Route } from 'wouter';
+import { Switch, Route, useLocation } from 'wouter';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from '@/context/AuthContext';
 import { ThemeProvider } from '@/context/ThemeContext';
@@ -9,6 +9,7 @@ import Lobby from '@/pages/Lobby';
 import Room from '@/pages/Room';
 import Dashboard from '@/pages/Dashboard';
 import Join from '@/pages/Join';
+import Landing from '@/pages/Landing';
 
 import { Background3D } from '@/components/Background3D';
 
@@ -22,9 +23,22 @@ function Router() {
       <Route path="/join/:code" component={Join} />
       <Route path="/rooms/:id" component={Room} />
       <Route path="/dashboard" component={Dashboard} />
-      <Route path="/" component={Lobby} />
-      <Route component={Lobby} />
+      <Route path="/lobby" component={Lobby} />
+      <Route path="/" component={Landing} />
+      <Route component={Landing} />
     </Switch>
+  );
+}
+
+function AppContent() {
+  const [location] = useLocation();
+  const show3D = location !== '/';
+  
+  return (
+    <>
+      {show3D && <Background3D />}
+      <Router />
+    </>
   );
 }
 
@@ -34,8 +48,7 @@ export default function App() {
       <ThemeProvider>
         <AuthProvider>
           <ToastProvider>
-            <Background3D />
-            <Router />
+            <AppContent />
           </ToastProvider>
         </AuthProvider>
       </ThemeProvider>

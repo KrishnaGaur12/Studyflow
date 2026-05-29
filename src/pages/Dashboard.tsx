@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ArrowLeft, Cpu, Activity, Zap, Network, History } from 'lucide-react';
+import { ArrowLeft, Cpu, Activity, Zap, Network } from 'lucide-react';
 import { Link } from 'wouter';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/context/AuthContext';
@@ -36,28 +36,44 @@ function formatDate(dateStr: string) {
 function StatCard({ icon: Icon, label, value, accent }: { icon: typeof Cpu; label: string; value: string; accent?: boolean }) {
   const [hovered, setHovered] = useState(false);
   return (
-    <div className="sr-glass sr-nodes"
+    <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        borderRadius: 'var(--sr-radius-xl)',
-        padding: 'var(--sr-space-5)',
-        display: 'flex', flexDirection: 'column', gap: 10,
-        fontFamily: 'var(--sr-font-sans)',
-        background: 'var(--sr-glass-surface)',
-        borderColor: hovered ? 'var(--sr-accent)' : 'var(--sr-glass-border)',
-        boxShadow: hovered ? '0 0 15px var(--sr-accent-soft)' : 'var(--sr-glass-shadow)',
-        transform: hovered ? 'translateY(-2px)' : 'none',
-        transition: 'all var(--sr-duration-fast) var(--sr-ease-out)',
+        borderRadius: 24,
+        padding: 24,
+        display: 'flex', flexDirection: 'column', gap: 16,
+        fontFamily: "'Outfit', sans-serif",
+        background: 'rgba(255, 255, 255, 0.65)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        border: '1px solid rgba(165, 180, 252, 0.3)',
+        boxShadow: hovered ? '0 12px 30px rgba(99, 102, 241, 0.1)' : '0 4px 15px rgba(99, 102, 241, 0.05)',
+        transform: hovered ? 'translateY(-4px)' : 'none',
+        transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
         cursor: 'default',
+        position: 'relative',
+        overflow: 'hidden',
       }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        <Icon size={15} style={{ color: hovered || accent ? 'var(--sr-accent)' : 'var(--sr-fg-3)', transition: 'color var(--sr-duration-fast)' }} />
-        <span style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 'var(--sr-tracking-caps)', color: 'var(--sr-fg-2)' }}>
+      {hovered && accent && (
+        <div style={{
+          position: 'absolute', top: -50, right: -50, width: 100, height: 100,
+          background: 'rgba(99, 102, 241, 0.1)', filter: 'blur(30px)', borderRadius: '50%'
+        }} />
+      )}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <div style={{
+          width: 36, height: 36, borderRadius: 12,
+          background: accent ? 'rgba(79, 70, 229, 0.1)' : 'rgba(165, 180, 252, 0.15)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+          <Icon size={18} style={{ color: accent ? '#4f46e5' : '#6366f1' }} />
+        </div>
+        <span style={{ fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', color: '#6366f1' }}>
           {label}
         </span>
       </div>
-      <div style={{ fontSize: 'var(--sr-text-2xl)', fontWeight: 700, color: 'var(--sr-fg-1)', fontFamily: 'var(--sr-font-mono)', fontVariantNumeric: 'tabular-nums' }}>
+      <div style={{ fontSize: 32, fontWeight: 700, color: '#1e1b4b', fontFamily: "'Outfit', sans-serif", fontVariantNumeric: 'tabular-nums' }}>
         {value}
       </div>
     </div>
@@ -125,88 +141,102 @@ export default function Dashboard() {
 
   return (
     <RouteGuard>
-      <div style={{ minHeight: '100vh', background: 'transparent', fontFamily: 'var(--sr-font-sans)' }}>
+      <div style={{ minHeight: '100vh', background: 'transparent', fontFamily: "'Outfit', sans-serif" }}>
         <TopNav />
         <div style={{
-          paddingTop: 'var(--sr-nav-height)',
           maxWidth: 960,
           margin: '0 auto',
-          padding: `var(--sr-nav-height) var(--sr-space-6) var(--sr-space-7)`,
+          padding: `120px 32px 80px`,
         }}>
-          <div style={{ paddingTop: 'var(--sr-space-7)' }}>
-
-            {/* Back button integrated into header */}
-
+          <div>
             {/* Page header */}
-            <div style={{ marginBottom: 'var(--sr-space-6)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sr-space-4)', marginBottom: 4 }}>
-                <h1 className="sr-text-gradient" style={{ fontSize: 'var(--sr-text-3xl)', fontWeight: 800, letterSpacing: 'var(--sr-tracking-tight)', display: 'inline-block' }}>
-                  Activity
-                </h1>
+            <div style={{ marginBottom: 48 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 8 }}>
                 {activeRoom && (
                   <Link href={`/rooms/${activeRoom.id}`} title="Back to room">
-                    <button className="sr-network-button" style={{ 
-                      width: 40, height: 40, borderRadius: '50%', 
+                    <button style={{ 
+                      width: 40, height: 40, borderRadius: 12, 
                       display: 'flex', alignItems: 'center', justifyContent: 'center', 
-                      cursor: 'pointer' 
-                    }}>
+                      cursor: 'pointer',
+                      background: 'rgba(255, 255, 255, 0.8)',
+                      border: '1px solid rgba(165, 180, 252, 0.4)',
+                      color: '#4f46e5',
+                      transition: 'all 0.2s ease',
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.background = '#fff'}
+                    onMouseLeave={e => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.8)'}
+                    >
                       <ArrowLeft size={18} />
                     </button>
                   </Link>
                 )}
+                <h1 style={{ 
+                  fontSize: 42, fontWeight: 700, 
+                  fontFamily: "'Playfair Display', serif",
+                  color: '#1e1b4b', letterSpacing: '-0.02em',
+                }}>
+                  Your Activity
+                </h1>
               </div>
-              <p style={{ fontSize: 16, color: 'var(--sr-fg-2)' }}>Your study history and lifetime stats.</p>
+              <p style={{ fontSize: 16, color: '#6366f1', marginLeft: activeRoom ? 56 : 0 }}>
+                Your study history and lifetime stats.
+              </p>
             </div>
 
             {/* Stats grid */}
             {loading ? (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 16, marginBottom: 'var(--sr-space-6)' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 24, marginBottom: 48 }}>
                 {[1, 2, 3, 4].map(i => (
-                  <div key={i} className="sr-glass sr-nodes" style={{ borderRadius: 'var(--sr-radius-xl)', padding: 'var(--sr-space-5)', display: 'flex', flexDirection: 'column', gap: 10 }}>
-                    <div className="sr-skeleton" style={{ width: '55%', height: 11 }} />
-                    <div className="sr-skeleton" style={{ width: '40%', height: 28 }} />
+                  <div key={i} style={{ borderRadius: 24, padding: 24, display: 'flex', flexDirection: 'column', gap: 16, background: 'rgba(255,255,255,0.5)', border: '1px solid rgba(165,180,252,0.2)' }}>
+                    <div className="sr-skeleton" style={{ width: '55%', height: 16, borderRadius: 8 }} />
+                    <div className="sr-skeleton" style={{ width: '40%', height: 32, borderRadius: 12 }} />
                   </div>
                 ))}
               </div>
             ) : (
               <div style={{
-              display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--sr-space-4)',
-              marginBottom: 'var(--sr-space-8)'
-            }}>
-              <StatCard icon={Activity} label="Time spent" value={formatDuration(stats.totalMinutes * 60)} accent />
-              <StatCard icon={Cpu} label="Total sessions" value={stats.totalSessions.toString()} />
-              <StatCard icon={Zap} label="Messages sent" value={stats.totalMessages.toString()} />
-              <StatCard icon={Network} label="Rooms joined" value={stats.roomsJoined.toString()} />
-            </div>
+                display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 24,
+                marginBottom: 64
+              }}>
+                <StatCard icon={Activity} label="Time spent" value={formatDuration(stats.totalMinutes * 60)} accent />
+                <StatCard icon={Cpu} label="Total sessions" value={stats.totalSessions.toString()} />
+                <StatCard icon={Zap} label="Messages sent" value={stats.totalMessages.toString()} />
+                <StatCard icon={Network} label="Rooms joined" value={stats.roomsJoined.toString()} />
+              </div>
             )}
 
             {/* Session history */}
             <div>
-              <h2 style={{ fontSize: 'var(--sr-text-xl)', fontWeight: 600, color: 'var(--sr-fg-1)', marginBottom: 'var(--sr-space-4)' }}>
+              <h2 style={{ 
+                fontSize: 24, fontWeight: 700, color: '#1e1b4b', marginBottom: 24,
+                fontFamily: "'Playfair Display', serif"
+              }}>
                 Session history
               </h2>
               {loading ? (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                   {[1, 2, 3, 4, 5].map(i => (
-                    <div key={i} className="sr-glass sr-nodes" style={{ borderRadius: 'var(--sr-radius-xl)', padding: '16px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                        <div className="sr-skeleton" style={{ width: 120, height: 13 }} />
-                        <div className="sr-skeleton" style={{ width: 80, height: 11 }} />
+                    <div key={i} style={{ borderRadius: 16, padding: '20px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255,255,255,0.5)' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                        <div className="sr-skeleton" style={{ width: 140, height: 16, borderRadius: 8 }} />
+                        <div className="sr-skeleton" style={{ width: 90, height: 12, borderRadius: 6 }} />
                       </div>
-                      <div className="sr-skeleton" style={{ width: 48, height: 13 }} />
+                      <div className="sr-skeleton" style={{ width: 60, height: 16, borderRadius: 8 }} />
                     </div>
                   ))}
                 </div>
               ) : sessions.length === 0 ? (
-                <div className="sr-glass sr-nodes" style={{
-                  textAlign: 'center', padding: 'var(--sr-space-8)',
-                  color: 'var(--sr-fg-3)', fontSize: 15,
-                  borderRadius: 'var(--sr-radius-xl)',
+                <div style={{
+                  textAlign: 'center', padding: 48,
+                  color: '#6366f1', fontSize: 16,
+                  background: 'rgba(255, 255, 255, 0.65)',
+                  border: '1px solid rgba(165, 180, 252, 0.3)',
+                  borderRadius: 24,
                 }}>
-                  No sessions yet. Start a Pomodoro timer in any room to track focus time.
+                  No sessions yet. Start a focus timer in any room to track your activity.
                 </div>
               ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                   {sessions.map(s => {
                     const ended = s.ended_at ? new Date(s.ended_at) : new Date();
                     const duration = Math.floor((ended.getTime() - new Date(s.started_at).getTime()) / 60000);
@@ -214,27 +244,35 @@ export default function Dashboard() {
                       <div
                         key={s.id}
                         data-testid={`session-row-${s.id}`}
-                        className="sr-glass sr-nodes"
                         style={{
-                          borderRadius: 'var(--sr-radius-xl)', padding: '16px 24px',
+                          borderRadius: 16, padding: '20px 24px',
                           display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16,
-                          transition: 'transform var(--sr-duration-fast)',
+                          background: 'rgba(255, 255, 255, 0.65)',
+                          backdropFilter: 'blur(20px)',
+                          WebkitBackdropFilter: 'blur(20px)',
+                          border: '1px solid rgba(165, 180, 252, 0.3)',
+                          transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                          cursor: 'default',
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
-                        onMouseLeave={(e) => e.currentTarget.style.transform = 'none'}
+                        onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(99, 102, 241, 0.08)'; }}
+                        onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = 'none'; }}
                       >
                         <div>
-                          <div style={{ fontSize: 14, fontWeight: 500, color: 'var(--sr-fg-1)', marginBottom: 2 }}>
+                          <div style={{ fontSize: 16, fontWeight: 700, color: '#1e1b4b', marginBottom: 4 }}>
                             {s.room_name}
                           </div>
-                          <div style={{ fontSize: 12, color: 'var(--sr-fg-3)' }}>{formatDate(s.started_at)}</div>
+                          <div style={{ fontSize: 13, color: '#818cf8', fontWeight: 500 }}>{formatDate(s.started_at)}</div>
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
-                          <div style={{ fontSize: 13, fontFamily: 'var(--sr-font-mono)', color: 'var(--sr-fg-1)' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0 }}>
+                          <div style={{ fontSize: 15, fontWeight: 600, fontFamily: "'Courier New', Courier, monospace", color: '#4f46e5' }}>
                             {formatDuration(duration * 60)}
                           </div>
                           {!s.ended_at && (
-                            <div style={{ fontSize: 11, fontWeight: 500, padding: '2px 8px', borderRadius: 4, background: 'var(--sr-success-soft)', color: 'var(--sr-success)' }}>
+                            <div style={{ 
+                              fontSize: 12, fontWeight: 700, padding: '4px 10px', 
+                              borderRadius: 999, background: 'rgba(16, 185, 129, 0.1)', color: '#10b981',
+                              textTransform: 'uppercase', letterSpacing: '1px',
+                            }}>
                               Live
                             </div>
                           )}

@@ -20,19 +20,19 @@ interface PresenceSidebarProps {
 
 function PresenceDot({ status, withGlow = false }: { status: PresenceStatus; withGlow?: boolean }) {
   const colorMap: Record<PresenceStatus, string> = {
-    studying: 'var(--sr-presence-studying)',
-    break: 'var(--sr-presence-break)',
-    idle: 'var(--sr-presence-idle)',
-    offline: 'var(--sr-presence-offline)',
+    studying: '#10b981', // green
+    break: '#f59e0b', // amber
+    idle: '#9ca3af', // gray
+    offline: '#d1d5db',
   };
   const isOffline = status === 'offline';
   return (
     <div style={{
-      width: 8, height: 8, borderRadius: '50%', flexShrink: 0,
+      width: 10, height: 10, borderRadius: '50%', flexShrink: 0,
       background: isOffline ? 'transparent' : colorMap[status],
-      border: isOffline ? `1.5px solid var(--sr-presence-offline)` : 'none',
+      border: isOffline ? `2px solid #d1d5db` : 'none',
       boxShadow: withGlow && status === 'studying'
-        ? `0 0 0 2px var(--sr-success-soft)`
+        ? `0 0 0 3px rgba(16, 185, 129, 0.2)`
         : 'none',
     }} />
   );
@@ -40,12 +40,12 @@ function PresenceDot({ status, withGlow = false }: { status: PresenceStatus; wit
 
 function getAvatarGradient(name: string) {
   const gradients = [
-    'linear-gradient(135deg, #f6d365 0%, #fda085 100%)',
-    'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)',
-    'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)',
-    'linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%)',
-    'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-    'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+    'linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%)',
+    'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)',
+    'linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%)',
+    'linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%)',
+    'linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%)',
+    'linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%)',
   ];
   let sum = 0;
   for (let i = 0; i < name.length; i++) sum += name.charCodeAt(i);
@@ -70,19 +70,29 @@ export function PresenceSidebar({ members, currentUserId, isAdmin, onKick }: Pre
   });
 
   return (
-    <div className="sr-glass sr-nodes" style={{
-      width: 'var(--sr-sidebar-width)',
-      borderRadius: 'var(--sr-radius-xl)',
+    <div style={{
+      width: 280,
+      background: 'rgba(255, 255, 255, 0.4)',
+      backdropFilter: 'blur(20px)',
+      WebkitBackdropFilter: 'blur(20px)',
+      border: '1px solid rgba(165, 180, 252, 0.2)',
+      borderRadius: 24,
       height: '100%',
       overflowY: 'auto',
       flexShrink: 0,
-      fontFamily: 'var(--sr-font-sans)',
-      paddingBottom: '16px',
+      fontFamily: "'Outfit', sans-serif",
+      paddingBottom: 16,
     }}>
-      <div style={{ padding: '20px 16px 12px' }}>
-        <div className="sr-eyebrow" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <div style={{ padding: '24px 20px 16px' }}>
+        <div style={{ 
+          display: 'flex', alignItems: 'center', gap: 8,
+          fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', color: '#6366f1'
+        }}>
           Participants
-          <span style={{ color: 'var(--sr-fg-1)', fontFamily: 'var(--sr-font-sans)', letterSpacing: 0, textTransform: 'none', fontWeight: 500 }}>
+          <span style={{ 
+            background: 'rgba(165, 180, 252, 0.2)', color: '#4f46e5',
+            padding: '2px 8px', borderRadius: 999, fontSize: 12, fontWeight: 700,
+          }}>
             {members.length}
           </span>
         </div>
@@ -101,51 +111,55 @@ export function PresenceSidebar({ members, currentUserId, isAdmin, onKick }: Pre
               data-testid={`presence-member-${member.user_id}`}
               style={{
                 display: 'flex', alignItems: 'center', gap: 12,
-                height: 56, padding: '0 16px',
-                background: hoveredId === member.user_id ? 'var(--sr-surface-raised)' : 'transparent',
-                transition: `background var(--sr-duration-fast)`,
+                height: 64, padding: '0 20px',
+                background: hoveredId === member.user_id ? 'rgba(255, 255, 255, 0.5)' : 'transparent',
+                transition: `all 0.2s ease`,
                 position: 'relative',
               }}
             >
               <div style={{ position: 'relative' }}>
                 <div style={{
-                  width: 32, height: 32, borderRadius: '50%',
+                  width: 40, height: 40, borderRadius: '50%',
                   background: getAvatarGradient(member.display_name),
+                  border: '2px solid #ffffff',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  color: '#fff', fontWeight: 600, fontSize: 13,
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                  color: '#4f46e5', fontWeight: 700, fontSize: 15,
+                  boxShadow: '0 2px 8px rgba(99, 102, 241, 0.1)'
                 }}>
                   {member.display_name.charAt(0).toUpperCase()}
                 </div>
-                <div style={{ position: 'absolute', bottom: -2, right: -2, background: 'var(--sr-surface)', borderRadius: '50%', padding: 2 }}>
+                <div style={{ 
+                  position: 'absolute', bottom: -2, right: -2, 
+                  background: '#fff', borderRadius: '50%', padding: 3 
+                }}>
                   <PresenceDot status={member.status} withGlow />
                 </div>
               </div>
 
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                  <span style={{ fontSize: 14, fontWeight: 500, color: 'var(--sr-fg-1)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  <span style={{ fontSize: 15, fontWeight: 600, color: '#1e1b4b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                     {member.display_name}
-                    {isMe && <span style={{ color: 'var(--sr-fg-3)', fontWeight: 400 }}> (you)</span>}
+                    {isMe && <span style={{ color: '#818cf8', fontWeight: 500 }}> (you)</span>}
                   </span>
                   {member.role === 'admin' && (
-                    <Crown size={12} style={{ color: 'var(--sr-warning)', flexShrink: 0 }} />
+                    <Crown size={14} style={{ color: '#f59e0b', flexShrink: 0 }} />
                   )}
                 </div>
-                <div style={{ fontSize: 12, color: 'var(--sr-fg-2)', marginTop: 1 }}>
+                <div style={{ fontSize: 13, color: '#6366f1', marginTop: 2, fontWeight: 500 }}>
                   {member.status === 'studying' ? 'Studying' : member.status === 'break' ? 'On break' : 'Idle'}
                 </div>
               </div>
 
               {member.role === 'admin' && (
                 <div style={{
-                  fontSize: 11, fontWeight: 500,
-                  padding: '2px 6px', borderRadius: 4,
-                  background: 'var(--sr-warning-soft)',
-                  color: 'var(--sr-warning)',
+                  fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px',
+                  padding: '4px 8px', borderRadius: 8,
+                  background: 'rgba(245, 158, 11, 0.1)',
+                  color: '#d97706',
                   flexShrink: 0,
                 }}>
-                  host
+                  Host
                 </div>
               )}
 
@@ -153,34 +167,38 @@ export function PresenceSidebar({ members, currentUserId, isAdmin, onKick }: Pre
                 <div style={{ position: 'relative' }}>
                   <button
                     onClick={() => setPopoverId(popoverId === member.user_id ? null : member.user_id)}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--sr-fg-3)', padding: 4 }}
+                    style={{ background: 'rgba(255,255,255,0.8)', border: '1px solid rgba(165,180,252,0.4)', borderRadius: 8, cursor: 'pointer', color: '#6366f1', padding: 6 }}
                     data-testid={`button-member-menu-${member.user_id}`}
                   >
                     <MoreHorizontal size={16} />
                   </button>
                   {popoverId === member.user_id && (
                     <div style={{
-                      position: 'absolute', right: 0, top: 32,
-                      background: 'var(--sr-surface-raised)',
-                      border: '1px solid var(--sr-border)',
-                      borderRadius: 'var(--sr-radius-lg)',
-                      boxShadow: 'var(--sr-shadow-md)',
+                      position: 'absolute', right: 0, top: 40,
+                      background: 'rgba(255, 255, 255, 0.95)',
+                      backdropFilter: 'blur(20px)',
+                      border: '1px solid rgba(165, 180, 252, 0.4)',
+                      borderRadius: 12,
+                      boxShadow: '0 10px 30px rgba(99, 102, 241, 0.1)',
                       padding: 4, minWidth: 160,
-                      zIndex: 'var(--sr-z-overlay)' as any,
+                      zIndex: 100,
                     }}>
                       <button
                         onClick={() => { setPopoverId(null); onKick(member.user_id, member.display_name); }}
                         data-testid={`button-kick-${member.user_id}`}
                         style={{
-                          display: 'flex', alignItems: 'center', gap: 8,
-                          width: '100%', padding: '8px 12px',
+                          display: 'flex', alignItems: 'center', gap: 10,
+                          width: '100%', padding: '10px 14px',
                           background: 'none', border: 'none', cursor: 'pointer',
-                          borderRadius: 'var(--sr-radius-md)',
-                          color: 'var(--sr-danger)', fontSize: 13, fontWeight: 500,
-                          fontFamily: 'var(--sr-font-sans)',
+                          borderRadius: 8,
+                          color: '#ef4444', fontSize: 14, fontWeight: 600,
+                          fontFamily: "'Outfit', sans-serif",
+                          transition: 'background 0.2s ease',
                         }}
+                        onMouseEnter={e => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.05)'}
+                        onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
                       >
-                        <UserX size={14} />
+                        <UserX size={16} />
                         Kick from room
                       </button>
                     </div>

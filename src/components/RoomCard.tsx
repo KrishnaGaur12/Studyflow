@@ -75,79 +75,98 @@ export function RoomCard({ room, onClick }: RoomCardProps) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       data-testid={`card-room-${room.id}`}
-      className="sr-glass sr-nodes"
       style={{
-        padding: 'var(--sr-space-5)',
-        borderRadius: 'var(--sr-radius-xl)',
-        background: hovered ? 'rgba(129, 140, 248, 0.08)' : 'var(--sr-glass-surface)',
-        borderColor: hovered ? 'var(--sr-accent)' : 'var(--sr-glass-border)',
-        transform: hovered ? 'translateY(-2px)' : 'none',
-        boxShadow: hovered ? '0 0 15px var(--sr-accent-soft)' : 'var(--sr-glass-shadow)',
+        padding: 32,
+        borderRadius: 24,
+        background: hovered ? 'rgba(255, 255, 255, 0.85)' : 'rgba(255, 255, 255, 0.65)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        border: hovered ? '1px solid rgba(99, 102, 241, 0.5)' : '1px solid rgba(165, 180, 252, 0.3)',
+        transform: hovered ? 'translateY(-4px)' : 'none',
+        boxShadow: hovered ? '0 20px 40px rgba(79, 70, 229, 0.12)' : '0 10px 30px rgba(99, 102, 241, 0.08)',
         cursor: 'pointer',
-        transition: `all var(--sr-duration-fast) var(--sr-ease-out)`,
-        display: 'flex', flexDirection: 'column', gap: 12,
+        transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+        display: 'flex', flexDirection: 'column', gap: 20,
+        fontFamily: "'Outfit', sans-serif",
       }}
     >
       <div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
           <div style={{
-            width: 10, height: 10, borderRadius: '50%', flexShrink: 0,
+            width: 12, height: 12, borderRadius: '50%', flexShrink: 0,
             background: memberInfo.count > 0
-              ? (activeSession ? 'var(--sr-success)' : 'var(--sr-warning)')
-              : 'var(--sr-fg-3)',
+              ? (activeSession ? '#10b981' : '#f59e0b')
+              : '#9ca3af',
+            boxShadow: memberInfo.count > 0 && activeSession ? '0 0 12px rgba(16, 185, 129, 0.6)' : 'none',
           }} />
-          <span style={{ fontSize: 'var(--sr-text-lg)', fontWeight: 600, color: 'var(--sr-fg-1)', lineHeight: 1.3 }}>
+          <span style={{ 
+            fontSize: 22, fontWeight: 700, color: '#1e1b4b', 
+            fontFamily: "'Playfair Display', serif", letterSpacing: '-0.02em',
+            lineHeight: 1.2 
+          }}>
             {room.name}
           </span>
         </div>
-        <div style={{ fontSize: 13, color: 'var(--sr-fg-2)' }}>
-          Hosted by {hostName || '…'}
+        <div style={{ fontSize: 14, color: '#6366f1', display: 'flex', alignItems: 'center', gap: 6 }}>
+          Hosted by <span style={{ fontWeight: 600 }}>{hostName || '…'}</span>
         </div>
       </div>
 
-      <div style={{ fontSize: 14, color: 'var(--sr-fg-1)' }}>
-        <span style={{ fontWeight: 600 }}>{memberInfo.count}</span>
-        <span style={{ color: 'var(--sr-fg-2)' }}> {memberInfo.count === 1 ? 'person' : 'people'} joined</span>
+      <div style={{ fontSize: 15, color: '#4f46e5' }}>
+        <span style={{ fontWeight: 700, fontSize: 18, color: '#1e1b4b' }}>{memberInfo.count}</span>
+        <span> {memberInfo.count === 1 ? 'person' : 'people'} joined</span>
       </div>
 
       {memberInfo.count > 0 && (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'center', marginTop: 4 }}>
           {displayNames.map((name, i) => (
             <div
               key={i}
               title={name}
               style={{
-                width: 28, height: 28, borderRadius: '50%',
-                background: 'var(--sr-accent-soft)',
-                border: '2px solid var(--sr-surface)',
+                width: 36, height: 36, borderRadius: '50%',
+                background: 'linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%)',
+                border: '3px solid #ffffff',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 11, fontWeight: 600, color: 'var(--sr-accent)',
-                marginLeft: i > 0 ? -8 : 0,
+                fontSize: 13, fontWeight: 700, color: '#4f46e5',
+                marginLeft: i > 0 ? -12 : 0,
                 flexShrink: 0,
+                boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+                transition: 'transform 0.2s ease',
               }}
+              onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-4px)'}
+              onMouseLeave={e => e.currentTarget.style.transform = 'none'}
             >
               {name.charAt(0).toUpperCase()}
             </div>
           ))}
           {extra > 0 && (
-            <div style={{ fontSize: 12, color: 'var(--sr-fg-2)', marginLeft: 6 }}>+{extra} more</div>
+            <div style={{ fontSize: 13, fontWeight: 600, color: '#818cf8', marginLeft: 12 }}>+{extra} more</div>
           )}
         </div>
       )}
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 'auto', paddingTop: 8 }}>
         <div style={{
-          display: 'flex', alignItems: 'center', gap: 4,
-          padding: '2px 8px', borderRadius: 'var(--sr-radius-sm)',
-          background: 'var(--sr-surface-raised)',
-          fontSize: 12, color: 'var(--sr-fg-3)',
+          display: 'flex', alignItems: 'center', gap: 6,
+          padding: '4px 12px', borderRadius: 999,
+          background: 'rgba(255, 255, 255, 0.8)',
+          border: '1px solid rgba(165, 180, 252, 0.3)',
+          fontSize: 12, fontWeight: 600, color: '#6366f1',
+          textTransform: 'uppercase', letterSpacing: '1px',
         }}>
-          <TypeIcon size={10} />
+          <TypeIcon size={12} />
           {typeLabels[room.type]}
         </div>
         {activeSession && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, color: 'var(--sr-fg-2)', fontFamily: 'var(--sr-font-mono)' }}>
-            <Clock size={10} style={{ color: 'var(--sr-success)' }} />
+          <div style={{ 
+            display: 'flex', alignItems: 'center', gap: 6, 
+            fontSize: 13, fontWeight: 600, color: '#10b981', 
+            fontFamily: "'Courier New', Courier, monospace",
+            padding: '4px 12px', borderRadius: 999,
+            background: 'rgba(16, 185, 129, 0.1)',
+          }}>
+            <Clock size={12} />
             {elapsed}
           </div>
         )}

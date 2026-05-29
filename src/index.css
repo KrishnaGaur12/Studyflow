@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap');
 @import "./styles/tokens.css";
 
 * {
@@ -44,8 +44,8 @@ input:focus, textarea:focus {
   transition: all var(--sr-duration-fast) var(--sr-ease-out);
 }
 .sr-nav-link:hover {
-  background: rgba(129, 140, 248, 0.08);
-  box-shadow: 0 0 10px var(--sr-accent-glow);
+  background: rgba(79, 70, 229, 0.08);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
 }
 
 button {
@@ -151,16 +151,11 @@ button {
 
 /* Gradient Text Utility */
 .sr-text-gradient {
-  background: linear-gradient(135deg, var(--sr-accent) 0%, #c084fc 100%);
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   color: transparent;
-}
-[data-theme="light"] .sr-text-gradient {
-  background: linear-gradient(135deg, var(--sr-accent) 0%, #d946ef 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 /* Graphical Geometric Shapes */
@@ -202,29 +197,31 @@ button {
 
 /* Network UI Components */
 .sr-network-input {
-  background: rgba(10, 10, 15, 0.4) !important;
-  border: 1px solid rgba(99, 102, 241, 0.4) !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+  border: 1px solid rgba(165, 180, 252, 0.4) !important;
   border-radius: 10px 0 0 10px !important;
   transition: all var(--sr-duration-fast) ease-out;
+  color: #1e1b4b !important;
 }
 .sr-network-input::placeholder {
-  color: var(--sr-fg-2) !important;
+  color: #6366f1 !important;
 }
 .sr-network-input:focus {
-  border-color: var(--sr-accent) !important;
-  box-shadow: 0 0 10px var(--sr-accent-glow) !important;
+  border-color: #4f46e5 !important;
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.2) !important;
+  background: rgba(255, 255, 255, 0.8) !important;
 }
 
 .sr-network-button {
-  background: rgba(99, 102, 241, 0.1) !important;
-  border: 1px solid rgba(99, 102, 241, 0.5) !important;
-  color: #fff !important;
+  background: rgba(79, 70, 229, 0.1) !important;
+  border: 1px solid rgba(79, 70, 229, 0.3) !important;
+  color: #1e1b4b !important;
   transition: all 0.2s ease-out !important;
   position: relative;
   overflow: hidden;
 }
 .sr-network-button:hover {
-  background: rgba(129, 140, 248, 0.15) !important;
-  border-color: var(--sr-accent) !important;
-  box-shadow: 0 0 10px var(--sr-accent-glow) !important;
+  background: rgba(79, 70, 229, 0.15) !important;
+  border-color: #4f46e5 !important;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.15) !important;
 }

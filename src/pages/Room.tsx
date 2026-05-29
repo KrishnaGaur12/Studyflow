@@ -73,7 +73,7 @@ export default function Room() {
       if (roomRes.error || !roomRes.data) {
           toast({ variant: 'error', title: 'Room not found' });
           sessionStorage.removeItem(SESSION_ROOM_KEY);
-          setLocation('/');
+          setLocation('/lobby');
           return;
         }
 
@@ -89,7 +89,7 @@ export default function Room() {
             if (joinErr && !joinErr.message.toLowerCase().includes('duplicate')) {
               toast({ variant: 'error', title: 'Could not join room', body: joinErr.message });
               sessionStorage.removeItem(SESSION_ROOM_KEY);
-              setLocation('/');
+              setLocation('/lobby');
               return;
             }
             toast({ variant: 'success', title: `Joined "${roomRes.data.name}"` });
@@ -97,7 +97,7 @@ export default function Room() {
             toast({ variant: 'error', title: 'Invite-only room', body: 'Ask the host for an invite link to join.' });
 
               sessionStorage.removeItem(SESSION_ROOM_KEY);
-              setLocation('/');
+              setLocation('/lobby');
               return;
             }
       }
@@ -201,7 +201,7 @@ export default function Room() {
         if ((payload.old as any)?.user_id === user.id) {
           sessionStorage.removeItem(SESSION_ROOM_KEY);
           toast({ variant: 'warning', title: 'You were removed from this room' });
-          setLocation('/');
+          setLocation('/lobby');
         }
       })
       .subscribe();
@@ -216,7 +216,7 @@ export default function Room() {
       .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'rooms', filter: `id=eq.${roomId}` }, () => {
         sessionStorage.removeItem(SESSION_ROOM_KEY);
         toast({ variant: 'warning', title: 'This room has been closed' });
-        setLocation('/');
+        setLocation('/lobby');
       })
       .subscribe();
     return () => { supabase.removeChannel(channel); };
@@ -227,7 +227,7 @@ export default function Room() {
     if (!user || !roomId) return;
     sessionStorage.removeItem(SESSION_ROOM_KEY);
     await supabase.from('room_members').delete().eq('room_id', roomId).eq('user_id', user.id);
-    setLocation('/');
+    setLocation('/lobby');
   }, [user, roomId, setLocation]);
 
   const handleLeave = useCallback(async () => {
@@ -282,7 +282,7 @@ export default function Room() {
       return;
     }
     sessionStorage.removeItem(SESSION_ROOM_KEY);
-    setLocation('/');
+    setLocation('/lobby');
   };
 
   const handleKick = useCallback((userId: string, name: string) => {
@@ -326,28 +326,30 @@ export default function Room() {
 
         {/* Sub-bar */}
         <div style={{
-          position: 'fixed', top: 'var(--sr-nav-height)', left: 0, right: 0, height: 40,
-          background: 'var(--sr-glass-surface)', 
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
-          borderBottom: '1px solid var(--sr-glass-border)',
+          position: 'fixed', top: 72, left: 0, right: 0, height: 48,
+          background: 'rgba(255, 255, 255, 0.55)', 
+          backdropFilter: 'blur(24px)',
+          WebkitBackdropFilter: 'blur(24px)',
+          borderBottom: '1px solid rgba(165, 180, 252, 0.2)',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: '0 var(--sr-space-5)', gap: 8,
-          zIndex: 'var(--sr-z-sticky)' as any,
+          padding: '0 32px', gap: 16,
+          zIndex: 30,
+          fontFamily: "'Outfit', sans-serif",
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             {room && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <LinkIcon size={12} style={{ color: 'var(--sr-fg-3)' }} />
-                <span className="sr-eyebrow" style={{ fontSize: 11, color: 'var(--sr-fg-2)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <LinkIcon size={14} style={{ color: '#6366f1' }} />
+                <span style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', color: '#4f46e5' }}>
                   Invite link
                 </span>
                 <code style={{
-                  fontFamily: 'var(--sr-font-mono)', fontSize: 13,
-                  color: 'var(--sr-fg-1)',
-                  background: 'var(--sr-surface-sunken)',
-                  padding: '2px 8px', borderRadius: 'var(--sr-radius-sm)',
-                  maxWidth: 360, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                  fontFamily: "'Courier New', Courier, monospace", fontSize: 13, fontWeight: 600,
+                  color: '#1e1b4b',
+                  background: 'rgba(165, 180, 252, 0.15)',
+                  border: '1px solid rgba(165, 180, 252, 0.3)',
+                  padding: '4px 12px', borderRadius: 8,
+                  maxWidth: 400, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                 }}>
                   {`${window.location.origin}/join/${room.invite_code}`}
                 </code>
@@ -355,20 +357,23 @@ export default function Room() {
             )}
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <button
               onClick={copyLink}
               data-testid="button-copy-link"
               style={{
-                display: 'flex', alignItems: 'center', gap: 5,
-                height: 26, padding: '0 10px',
-                background: 'transparent', border: '1px solid var(--sr-border)',
-                borderRadius: 'var(--sr-radius-md)',
-                color: 'var(--sr-fg-2)', fontSize: 12, cursor: 'pointer',
+                display: 'flex', alignItems: 'center', gap: 6,
+                height: 32, padding: '0 16px',
+                background: 'rgba(255, 255, 255, 0.8)', border: '1px solid rgba(165, 180, 252, 0.4)',
+                borderRadius: 8,
+                color: '#4f46e5', fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                transition: 'all 0.2s ease',
               }}
+              onMouseEnter={e => e.currentTarget.style.background = '#ffffff'}
+              onMouseLeave={e => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.8)'}
             >
-              {copied ? <Check size={11} style={{ color: 'var(--sr-success)' }} /> : <Copy size={11} />}
-              {copied ? 'Copied!' : 'Copy invite link'}
+              {copied ? <Check size={14} style={{ color: '#10b981' }} /> : <Copy size={14} />}
+              {copied ? 'Copied!' : 'Copy link'}
             </button>
 
             {isAdmin && (
@@ -377,14 +382,17 @@ export default function Room() {
                 disabled={actionLoading}
                 data-testid="button-delete-room"
                 style={{
-                  display: 'flex', alignItems: 'center', gap: 5,
-                  height: 26, padding: '0 10px',
-                  background: 'transparent', border: '1px solid var(--sr-border)',
-                  borderRadius: 'var(--sr-radius-md)',
-                  color: 'var(--sr-danger)', fontSize: 12, cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', gap: 6,
+                  height: 32, padding: '0 16px',
+                  background: 'rgba(239, 68, 68, 0.05)', border: '1px solid rgba(239, 68, 68, 0.2)',
+                  borderRadius: 8,
+                  color: '#ef4444', fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                  transition: 'all 0.2s ease',
                 }}
+                onMouseEnter={e => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)'}
+                onMouseLeave={e => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.05)'}
               >
-                <Trash2 size={11} />
+                <Trash2 size={14} />
                 Delete room
               </button>
             )}
@@ -395,10 +403,11 @@ export default function Room() {
         <div style={{
           display: 'flex',
           height: '100vh',
-          padding: `calc(var(--sr-nav-height) + 56px) var(--sr-space-5) var(--sr-space-5)`,
-          gap: 'var(--sr-space-5)',
+          padding: `144px 32px 32px`,
+          gap: 24,
           overflow: 'hidden',
           boxSizing: 'border-box',
+          fontFamily: "'Outfit', sans-serif",
         }}>
           <PresenceSidebar members={members} currentUserId={user?.id || ''} isAdmin={isAdmin} onKick={handleKick} />
           <Timer roomId={roomId} isAdmin={isAdmin} currentUserId={user?.id || ''} myStatus={myStatus} onStatusChange={setMyStatus} />
@@ -469,11 +478,17 @@ export default function Room() {
 function Modal({ children, onClose }: { children: React.ReactNode; onClose: () => void }) {
   return (
     <>
-      <div onClick={onClose} style={{ position: 'fixed', inset: 0, background: 'var(--sr-scrim)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', zIndex: 'var(--sr-z-overlay)' as any }} />
-      <div className="sr-glass" style={{
+      <div onClick={onClose} style={{ position: 'fixed', inset: 0, background: 'rgba(30, 27, 75, 0.4)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', zIndex: 100 }} />
+      <div style={{
         position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-        borderRadius: 'var(--sr-radius-2xl)', padding: 'var(--sr-space-6)',
-        zIndex: 'var(--sr-z-modal)' as any, width: 'min(420px, 92vw)',
+        borderRadius: 24, padding: 32,
+        background: 'rgba(255, 255, 255, 0.9)',
+        backdropFilter: 'blur(30px)',
+        WebkitBackdropFilter: 'blur(30px)',
+        border: '1px solid rgba(165, 180, 252, 0.4)',
+        boxShadow: '0 24px 48px rgba(30, 27, 75, 0.15)',
+        zIndex: 101, width: '90%', maxWidth: 440,
+        fontFamily: "'Outfit', sans-serif",
       }}>
         {children}
       </div>
@@ -481,28 +496,28 @@ function Modal({ children, onClose }: { children: React.ReactNode; onClose: () =
   );
 }
 function MFooter({ children }: { children: React.ReactNode }) {
-  return <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, marginTop: 'var(--sr-space-5)', flexWrap: 'wrap' }}>{children}</div>;
+  return <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 12, marginTop: 32, flexWrap: 'wrap' }}>{children}</div>;
 }
 function GhostBtn({ children, onClick }: { children: React.ReactNode; onClick: () => void }) {
   return (
-    <button onClick={onClick} style={{ height: 36, padding: '0 16px', background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--sr-fg-2)', fontSize: 14 }}>
+    <button onClick={onClick} style={{ height: 40, padding: '0 16px', background: 'transparent', border: 'none', cursor: 'pointer', color: '#6366f1', fontSize: 14, fontWeight: 600, borderRadius: 8, transition: 'background 0.2s ease' }} onMouseEnter={e => e.currentTarget.style.background = 'rgba(165, 180, 252, 0.15)'} onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
       {children}
     </button>
   );
 }
 function DangerBtn({ children, onClick, testId }: { children: React.ReactNode; onClick: () => void; testId?: string }) {
   return (
-    <button onClick={onClick} data-testid={testId} style={{ height: 36, padding: '0 16px', background: 'var(--sr-danger)', color: '#fff', border: 'none', borderRadius: 'var(--sr-radius-md)', cursor: 'pointer', fontSize: 14, fontWeight: 500, display: 'flex', alignItems: 'center', gap: 6 }}>
+    <button onClick={onClick} data-testid={testId} style={{ height: 40, padding: '0 20px', background: '#ef4444', color: '#fff', border: 'none', borderRadius: 8, cursor: 'pointer', fontSize: 14, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 8, boxShadow: '0 4px 12px rgba(239, 68, 68, 0.3)', transition: 'transform 0.2s ease' }} onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'} onMouseLeave={e => e.currentTarget.style.transform = 'none'}>
       {children}
     </button>
   );
 }
 function AccentBtn({ children, onClick, testId }: { children: React.ReactNode; onClick: () => void; testId?: string }) {
   return (
-    <button onClick={onClick} data-testid={testId} style={{ height: 36, padding: '0 16px', background: 'var(--sr-accent)', color: 'var(--sr-fg-invert)', border: 'none', borderRadius: 'var(--sr-radius-md)', cursor: 'pointer', fontSize: 14, fontWeight: 500, display: 'flex', alignItems: 'center', gap: 6 }}>
+    <button onClick={onClick} data-testid={testId} style={{ height: 40, padding: '0 20px', background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)', color: '#fff', border: 'none', borderRadius: 8, cursor: 'pointer', fontSize: 14, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 8, boxShadow: '0 4px 14px rgba(79, 70, 229, 0.3)', transition: 'transform 0.2s ease' }} onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'} onMouseLeave={e => e.currentTarget.style.transform = 'none'}>
       {children}
     </button>
   );
 }
-const mTitle: React.CSSProperties = { fontSize: 'var(--sr-text-lg)', fontWeight: 600, color: 'var(--sr-fg-1)', marginBottom: 8 };
-const mBody: React.CSSProperties = { fontSize: 14, color: 'var(--sr-fg-2)', lineHeight: 1.65 };
+const mTitle: React.CSSProperties = { fontSize: 24, fontWeight: 700, color: '#1e1b4b', marginBottom: 12, fontFamily: "'Playfair Display', serif", letterSpacing: '-0.02em' };
+const mBody: React.CSSProperties = { fontSize: 15, color: '#4f46e5', lineHeight: 1.6 };

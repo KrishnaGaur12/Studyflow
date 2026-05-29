@@ -1,58 +1,57 @@
 :root,
 [data-theme="dark"] {
-  /* Base Backgrounds (overridden by dynamic mesh if used) */
-  --sr-bg:              #0a0a0f;
-  --sr-surface:         #141419;
-  --sr-surface-raised:  #1e1e24;
-  --sr-surface-sunken:  #050508;
-  --sr-scrim:           rgba(0, 0, 0, 0.7);
+  /* Base Backgrounds — light, airy, matching fog */
+  --sr-bg:              #f8f9fc;
+  --sr-surface:         rgba(255, 255, 255, 0.7);
+  --sr-surface-raised:  rgba(255, 255, 255, 0.85);
+  --sr-surface-sunken:  #eef0f6;
+  --sr-scrim:           rgba(100, 100, 130, 0.35);
 
-  /* Glassmorphism Tokens */
-  --sr-glass-surface:   rgba(20, 20, 25, 0.6);
-  --sr-glass-border:    rgba(255, 255, 255, 0.08);
-  --sr-glass-shadow:    0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  /* Glassmorphism Tokens — frosted glass on light fog */
+  --sr-glass-surface:   rgba(255, 255, 255, 0.45);
+  --sr-glass-border:    rgba(165, 180, 252, 0.3);
+  --sr-glass-shadow:    0 8px 32px 0 rgba(99, 102, 241, 0.08);
 
   /* Borders */
-  --sr-border:          #2A2A35;
-  --sr-border-strong:   #3A3A45;
-  --sr-border-subtle:   #1F1F25;
+  --sr-border:          rgba(165, 180, 252, 0.25);
+  --sr-border-strong:   rgba(129, 140, 248, 0.35);
+  --sr-border-subtle:   rgba(199, 210, 254, 0.3);
 
-  /* Text */
-  --sr-fg-1:            #F8FAFC;
-  --sr-fg-2:            #94A3B8;
-  --sr-fg-3:            #64748B;
-  --sr-fg-4:            #475569;
-  --sr-fg-invert:       #0F172A;
+  /* Text — dark on light */
+  --sr-fg-1:            #1e1b4b;
+  --sr-fg-2:            #4338ca;
+  --sr-fg-3:            #6366f1;
+  --sr-fg-4:            #a5b4fc;
+  --sr-fg-invert:       #ffffff;
 
-  /* Accents - using a vibrant indigo/purple */
-  --sr-accent:          #818CF8;
-  --sr-accent-hover:    #A5B4FC;
-  --sr-accent-press:    #6366F1;
-  --sr-accent-soft:     rgba(129, 140, 248, 0.15);
-  --sr-accent-glow:     rgba(129, 140, 248, 0.4);
+  /* Accents — deep indigo to match fog highlights */
+  --sr-accent:          #4f46e5;
+  --sr-accent-hover:    #6366f1;
+  --sr-accent-press:    #4338ca;
+  --sr-accent-soft:     rgba(79, 70, 229, 0.12);
+  --sr-accent-glow:     rgba(99, 102, 241, 0.25);
 
-
-  /* Status Colors - made more vibrant */
-  --sr-success:         #10B981;
-  --sr-success-soft:    rgba(16, 185, 129, 0.15);
-  --sr-success-glow:    rgba(16, 185, 129, 0.4);
-  --sr-warning:         #F59E0B;
-  --sr-warning-soft:    rgba(245, 158, 11, 0.15);
-  --sr-warning-glow:    rgba(245, 158, 11, 0.4);
-  --sr-danger:          #EF4444;
-  --sr-danger-soft:     rgba(239, 68, 68, 0.15);
-  --sr-info:            #3B82F6;
-  --sr-info-soft:       rgba(59, 130, 246, 0.15);
+  /* Status Colors */
+  --sr-success:         #059669;
+  --sr-success-soft:    rgba(5, 150, 105, 0.1);
+  --sr-success-glow:    rgba(5, 150, 105, 0.25);
+  --sr-warning:         #d97706;
+  --sr-warning-soft:    rgba(217, 119, 6, 0.1);
+  --sr-warning-glow:    rgba(217, 119, 6, 0.25);
+  --sr-danger:          #dc2626;
+  --sr-danger-soft:     rgba(220, 38, 38, 0.1);
+  --sr-info:            #2563eb;
+  --sr-info-soft:       rgba(37, 99, 235, 0.1);
 
   --sr-presence-studying: var(--sr-success);
   --sr-presence-break:    var(--sr-warning);
   --sr-presence-idle:     var(--sr-fg-3);
   --sr-presence-offline:  var(--sr-fg-4);
 
-  /* Shadows */
-  --sr-shadow-sm:   0 1px 2px rgba(0, 0, 0, 0.5);
-  --sr-shadow-md:   0 4px 12px rgba(0, 0, 0, 0.4);
-  --sr-shadow-lg:   0 12px 32px rgba(0, 0, 0, 0.5);
+  /* Shadows — subtle and refined for light theme */
+  --sr-shadow-sm:   0 1px 3px rgba(99, 102, 241, 0.06);
+  --sr-shadow-md:   0 4px 16px rgba(99, 102, 241, 0.08);
+  --sr-shadow-lg:   0 12px 40px rgba(99, 102, 241, 0.12);
   --sr-shadow-glow: 0 0 0 3px var(--sr-accent-glow);
 }
 
@@ -144,11 +143,11 @@
 
 /* Micro-interactions & utilities */
 .sr-glass {
-  background: rgba(10, 10, 15, 0.4);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(99, 102, 241, 0.4);
-  box-shadow: 0 0 15px rgba(99, 102, 241, 0.15), inset 0 0 20px rgba(99, 102, 241, 0.05);
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(165, 180, 252, 0.3);
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.6);
   position: relative;
 }
 

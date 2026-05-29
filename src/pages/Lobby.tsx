@@ -16,7 +16,6 @@ export default function Lobby() {
   const [rooms, setRooms] = useState<Room[]>([]);
   const [loading, setLoading] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [isNewRoomOpen, setIsNewRoomOpen] = useState(false);
   const [inviteCode, setInviteCode] = useState('');
 
   const fetchRooms = async () => {
@@ -91,70 +90,97 @@ export default function Lobby() {
 
   return (
     <RouteGuard>
-      <div style={{ minHeight: '100vh', background: 'transparent' }}>
+      <div style={{ minHeight: '100vh', background: 'transparent', fontFamily: "'Outfit', sans-serif" }}>
         <TopNav />
         <div style={{
-          maxWidth: 'var(--sr-content-max)',
+          maxWidth: 1200,
           margin: '0 auto',
-          padding: `var(--sr-nav-height) var(--sr-space-6) var(--sr-space-7)`,
+          padding: `120px 32px 80px`, // Extra top padding to account for fixed TopNav
         }}>
           {/* Page header */}
-          <div 
-            className="sr-glass" 
-            style={{
-            display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 'var(--sr-space-5)',
-            marginBottom: 'var(--sr-space-6)', padding: 'var(--sr-space-5)',
-            borderRadius: 'var(--sr-radius-xl)', marginTop: 'var(--sr-space-4)'
+          <div style={{
+            display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 24,
+            marginBottom: 48, padding: '40px',
+            background: 'rgba(255, 255, 255, 0.65)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            borderRadius: 24,
+            border: '1px solid rgba(165, 180, 252, 0.3)',
+            boxShadow: '0 10px 30px rgba(99, 102, 241, 0.08)',
           }}>
             <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
+                <img src="/logo.png" alt="StudyFlow" style={{ height: 32, objectFit: 'contain', mixBlendMode: 'multiply' }} />
+                <span style={{ fontSize: 16, fontWeight: 700, color: '#4f46e5', textTransform: 'uppercase', letterSpacing: '2px' }}>
+                  Dashboard
+                </span>
+              </div>
               <h1 style={{
-                fontSize: 'var(--sr-text-3xl)', fontWeight: 700,
-                color: 'var(--sr-fg-1)', letterSpacing: 'var(--sr-tracking-tight)',
-                marginBottom: 4,
+                fontSize: 42, fontWeight: 700,
+                color: '#1e1b4b', letterSpacing: '-0.02em',
+                fontFamily: "'Playfair Display', serif",
+                marginBottom: 8,
               }}>
-                Study rooms
+                Your Rooms
               </h1>
-              <p style={{ fontSize: 16, color: 'var(--sr-fg-2)' }}>Join an open room or create your own.</p>
+              <p style={{ fontSize: 16, color: '#6366f1' }}>Join an open room or create your own.</p>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            
+            <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
               <form onSubmit={handleJoinByCode} style={{ display: 'flex', alignItems: 'center' }}>
                 <input
                   type="text"
                   placeholder="Invite code"
                   value={inviteCode}
                   onChange={(e) => setInviteCode(e.target.value)}
-                  className="sr-network-input"
                   style={{
-                    height: 44, width: 140, padding: '0 12px',
-                    color: 'var(--sr-fg-1)', fontSize: 14,
-                    outline: 'none'
+                    height: 48, width: 160, padding: '0 16px',
+                    color: '#1e1b4b', fontSize: 15,
+                    background: 'rgba(255, 255, 255, 0.8)',
+                    border: '1px solid rgba(165, 180, 252, 0.4)',
+                    borderRight: 'none',
+                    borderRadius: '12px 0 0 12px',
+                    outline: 'none',
+                    fontFamily: "'Outfit', sans-serif",
+                    transition: 'border-color 0.2s ease',
                   }}
+                  onFocus={e => e.currentTarget.style.borderColor = '#6366f1'}
+                  onBlur={e => e.currentTarget.style.borderColor = 'rgba(165, 180, 252, 0.4)'}
                 />
                 <button
                   type="submit"
                   disabled={!inviteCode.trim()}
-                  className="sr-network-button"
                   style={{
-                    height: 44, width: 44, borderRadius: '0 10px 10px 0',
+                    height: 48, width: 48,
+                    borderRadius: '0 12px 12px 0',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    background: inviteCode.trim() ? '#4f46e5' : 'rgba(165, 180, 252, 0.2)',
+                    color: inviteCode.trim() ? '#fff' : '#818cf8',
+                    border: inviteCode.trim() ? '1px solid #4f46e5' : '1px solid rgba(165, 180, 252, 0.4)',
                     cursor: inviteCode.trim() ? 'pointer' : 'not-allowed',
-                    marginLeft: -1,
+                    transition: 'all 0.2s ease',
                   }}
                 >
                   <ArrowRight size={18} />
                 </button>
               </form>
+
               <button
                 onClick={() => setShowCreateModal(true)}
                 data-testid="button-create-room"
-                className="sr-button-active sr-network-button"
                 style={{
-                  height: 44, padding: '0 24px',
-                  background: 'var(--sr-accent)', color: '#fff',
-                  border: 'none', borderRadius: 'var(--sr-radius-md)',
+                  height: 48, padding: '0 24px',
+                  background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)',
+                  color: '#ffffff',
+                  border: 'none', borderRadius: 12,
                   fontSize: 15, fontWeight: 600, cursor: 'pointer',
-                  display: 'flex', alignItems: 'center', gap: 8,
+                  display: 'flex', alignItems: 'center', gap: 10,
+                  boxShadow: '0 4px 14px rgba(79, 70, 229, 0.3)',
+                  transition: 'all 0.2s ease',
+                  fontFamily: "'Outfit', sans-serif",
                 }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(79, 70, 229, 0.4)'; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(79, 70, 229, 0.3)'; }}
               >
                 <Plus size={18} />
                 New room
@@ -164,16 +190,17 @@ export default function Lobby() {
 
           {/* Room grid */}
           {loading ? (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 'var(--sr-space-5)' }}>
-              {[1, 2, 3, 4].map(i => (
-                <div key={i} className="sr-glass" style={{
-                  borderRadius: 'var(--sr-radius-xl)',
-                  padding: 'var(--sr-space-5)',
-                  display: 'flex', flexDirection: 'column', gap: 12,
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 24 }}>
+              {[1, 2, 3, 4, 5, 6].map(i => (
+                <div key={i} style={{
+                  borderRadius: 24, padding: 32,
+                  display: 'flex', flexDirection: 'column', gap: 16,
+                  background: 'rgba(255, 255, 255, 0.5)',
+                  border: '1px solid rgba(165, 180, 252, 0.2)',
                 }}>
-                  <div className="sr-skeleton" style={{ width: '60%', height: 18 }} />
-                  <div className="sr-skeleton" style={{ width: '40%', height: 14 }} />
-                  <div className="sr-skeleton" style={{ width: '50%', height: 14 }} />
+                  <div className="sr-skeleton" style={{ width: '60%', height: 24, borderRadius: 12 }} />
+                  <div className="sr-skeleton" style={{ width: '40%', height: 16, borderRadius: 8 }} />
+                  <div className="sr-skeleton" style={{ width: '70%', height: 32, borderRadius: 16, marginTop: 8 }} />
                 </div>
               ))}
             </div>
@@ -181,29 +208,43 @@ export default function Lobby() {
             <div style={{
               display: 'flex', flexDirection: 'column',
               alignItems: 'center', justifyContent: 'center',
-              paddingTop: 'var(--sr-space-9)', gap: 16, textAlign: 'center',
+              paddingTop: 80, gap: 20, textAlign: 'center',
             }}>
-              <Users size={56} style={{ color: 'var(--sr-fg-3)', strokeWidth: 1.5 }} />
-              <h2 style={{ fontSize: 'var(--sr-text-xl)', fontWeight: 600, color: 'var(--sr-fg-1)' }}>
+              <div style={{
+                width: 80, height: 80, borderRadius: 24,
+                background: 'rgba(255, 255, 255, 0.6)',
+                border: '1px solid rgba(165, 180, 252, 0.3)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                boxShadow: '0 8px 24px rgba(99, 102, 241, 0.08)'
+              }}>
+                <Users size={40} style={{ color: '#818cf8', strokeWidth: 1.5 }} />
+              </div>
+              <h2 style={{ fontSize: 24, fontWeight: 700, color: '#1e1b4b', fontFamily: "'Playfair Display', serif" }}>
                 No rooms yet
               </h2>
-              <p style={{ fontSize: 14, color: 'var(--sr-fg-2)', maxWidth: 280, lineHeight: 1.6 }}>
-                Create one to start studying together.
+              <p style={{ fontSize: 16, color: '#6366f1', maxWidth: 320, lineHeight: 1.6 }}>
+                Create one to start studying together and track your focus.
               </p>
               <button
                 onClick={() => setShowCreateModal(true)}
                 style={{
-                  height: 36, padding: '0 20px',
-                  background: 'var(--sr-accent)', color: 'var(--sr-fg-invert)',
-                  border: 'none', borderRadius: 'var(--sr-radius-md)',
-                  fontSize: 14, fontWeight: 500, cursor: 'pointer',
+                  height: 44, padding: '0 24px', marginTop: 12,
+                  background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)',
+                  color: '#ffffff',
+                  border: 'none', borderRadius: 12,
+                  fontSize: 15, fontWeight: 600, cursor: 'pointer',
+                  boxShadow: '0 4px 14px rgba(79, 70, 229, 0.3)',
+                  transition: 'all 0.2s ease',
+                  fontFamily: "'Outfit', sans-serif",
                 }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(79, 70, 229, 0.4)'; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(79, 70, 229, 0.3)'; }}
               >
                 Create a room
               </button>
             </div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 'var(--sr-space-5)' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 24 }}>
               {rooms.map(room => (
                 <RoomCard key={room.id} room={room} onClick={() => handleRoomClick(room)} />
               ))}
