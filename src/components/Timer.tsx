@@ -15,6 +15,7 @@ interface TimerProps {
   currentUserId: string;
   onStatusChange?: (status: 'studying' | 'break' | 'idle') => void;
   myStatus: 'studying' | 'break' | 'idle';
+  onSessionStateChange?: (isActive: boolean) => void;
 }
 
 function formatTime(seconds: number) {
@@ -30,7 +31,7 @@ const RING_RADIUS = 150;
 const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
 const POMODORO_DURATION = 25 * 60;
 
-export function Timer({ roomId, isAdmin, currentUserId, onStatusChange, myStatus }: TimerProps) {
+export function Timer({ roomId, isAdmin, currentUserId, onStatusChange, myStatus, onSessionStateChange }: TimerProps) {
   const { toast } = useToast();
   const [session, setSession] = useState<ActiveSession | null>(null);
   const [elapsed, setElapsed] = useState(0);
@@ -56,6 +57,11 @@ export function Timer({ roomId, isAdmin, currentUserId, onStatusChange, myStatus
     };
     load();
   }, [roomId]);
+
+  // Broadcast session state to parent
+  useEffect(() => {
+    onSessionStateChange?.(!!session);
+  }, [session, onSessionStateChange]);
 
   // Subscribe to session changes
   useEffect(() => {

@@ -40,6 +40,7 @@ export default function Room() {
   const [myStatus, setMyStatus] = useState<'studying' | 'break' | 'idle'>('studying');
   const [hostName, setHostName] = useState('');
   const [copied, setCopied] = useState(false);
+  const [isSessionActive, setIsSessionActive] = useState(false);
 
   // Modals
   const [kickConfirm, setKickConfirm] = useState<{ userId: string; name: string } | null>(null);
@@ -322,95 +323,129 @@ export default function Room() {
   return (
     <RouteGuard>
       <div style={{ minHeight: '100vh', background: 'transparent', display: 'flex', flexDirection: 'column' }}>
-        <TopNav roomName={room?.name} hostedBy={hostName} onLeave={handleLeave} />
+        {!isSessionActive && (
+          <>
+            <TopNav roomName={room?.name} hostedBy={hostName} onLeave={handleLeave} />
 
-        {/* Sub-bar */}
-        <div style={{
-          position: 'fixed', top: 72, left: 0, right: 0, height: 48,
-          background: 'rgba(255, 255, 255, 0.55)', 
-          backdropFilter: 'blur(24px)',
-          WebkitBackdropFilter: 'blur(24px)',
-          borderBottom: '1px solid rgba(165, 180, 252, 0.2)',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: '0 32px', gap: 16,
-          zIndex: 30,
-          fontFamily: "'Manrope', sans-serif",
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            {room && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <LinkIcon size={14} style={{ color: '#6366f1' }} />
-                <span style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', color: '#4f46e5' }}>
-                  Invite link
-                </span>
-                <code style={{
-                  fontFamily: "'Courier New', Courier, monospace", fontSize: 13, fontWeight: 600,
-                  color: '#1e1b4b',
-                  background: 'rgba(165, 180, 252, 0.15)',
-                  border: '1px solid rgba(165, 180, 252, 0.3)',
-                  padding: '4px 12px', borderRadius: 8,
-                  maxWidth: 400, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-                }}>
-                  {`${window.location.origin}/join/${room.invite_code}`}
-                </code>
+            {/* Sub-bar */}
+            <div style={{
+              position: 'fixed', top: 96, left: 0, right: 0, height: 48,
+              background: 'rgba(255, 255, 255, 0.55)', 
+              backdropFilter: 'blur(24px)',
+              WebkitBackdropFilter: 'blur(24px)',
+              borderBottom: '1px solid rgba(165, 180, 252, 0.2)',
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              padding: '0 32px', gap: 16,
+              zIndex: 30,
+              fontFamily: "'Manrope', sans-serif",
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                {room && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <LinkIcon size={14} style={{ color: '#6366f1' }} />
+                    <span style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', color: '#4f46e5' }}>
+                      Invite link
+                    </span>
+                    <code style={{
+                      fontFamily: "'Courier New', Courier, monospace", fontSize: 13, fontWeight: 600,
+                      color: '#1e1b4b',
+                      background: 'rgba(165, 180, 252, 0.15)',
+                      border: '1px solid rgba(165, 180, 252, 0.3)',
+                      padding: '4px 12px', borderRadius: 8,
+                      maxWidth: 400, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                    }}>
+                      {`${window.location.origin}/join/${room.invite_code}`}
+                    </code>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <button
+                  onClick={copyLink}
+                  data-testid="button-copy-link"
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: 6,
+                    height: 32, padding: '0 16px',
+                    background: 'rgba(255, 255, 255, 0.8)', border: '1px solid rgba(165, 180, 252, 0.4)',
+                    borderRadius: 8,
+                    color: '#4f46e5', fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.background = '#ffffff'}
+                  onMouseLeave={e => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.8)'}
+                >
+                  {copied ? <Check size={14} style={{ color: '#10b981' }} /> : <Copy size={14} />}
+                  {copied ? 'Copied!' : 'Copy link'}
+                </button>
+
+                {isAdmin && (
+                  <button
+                    onClick={() => setDeleteConfirm(true)}
+                    disabled={actionLoading}
+                    data-testid="button-delete-room"
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: 6,
+                      height: 32, padding: '0 16px',
+                      background: 'rgba(239, 68, 68, 0.05)', border: '1px solid rgba(239, 68, 68, 0.2)',
+                      borderRadius: 8,
+                      color: '#ef4444', fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)'}
+                    onMouseLeave={e => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.05)'}
+                  >
+                    <Trash2 size={14} />
+                    Delete room
+                  </button>
+                )}
+              </div>
+            </div>
+          </>
+        )}
+
+        {isSessionActive && (
+          <div style={{ position: 'fixed', top: 24, right: 32, zIndex: 40 }}>
             <button
-              onClick={copyLink}
-              data-testid="button-copy-link"
+              onClick={handleLeave}
+              data-testid="button-leave-room-active"
               style={{
-                display: 'flex', alignItems: 'center', gap: 6,
-                height: 32, padding: '0 16px',
-                background: 'rgba(255, 255, 255, 0.8)', border: '1px solid rgba(165, 180, 252, 0.4)',
-                borderRadius: 8,
-                color: '#4f46e5', fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                background: 'rgba(255, 255, 255, 0.75)',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
+                border: '1px solid rgba(220, 38, 38, 0.3)',
+                borderRadius: 999,
+                padding: '0 16px',
+                height: 36,
+                fontSize: 13,
+                color: '#dc2626',
+                cursor: 'pointer',
+                fontWeight: 600,
+                fontFamily: "'Manrope', sans-serif",
                 transition: 'all 0.2s ease',
+                boxShadow: '0 4px 12px rgba(220, 38, 38, 0.08)',
               }}
-              onMouseEnter={e => e.currentTarget.style.background = '#ffffff'}
-              onMouseLeave={e => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.8)'}
+              onMouseEnter={e => e.currentTarget.style.background = 'rgba(220, 38, 38, 0.1)'}
+              onMouseLeave={e => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.75)'}
             >
-              {copied ? <Check size={14} style={{ color: '#10b981' }} /> : <Copy size={14} />}
-              {copied ? 'Copied!' : 'Copy link'}
+              Leave room
             </button>
-
-            {isAdmin && (
-              <button
-                onClick={() => setDeleteConfirm(true)}
-                disabled={actionLoading}
-                data-testid="button-delete-room"
-                style={{
-                  display: 'flex', alignItems: 'center', gap: 6,
-                  height: 32, padding: '0 16px',
-                  background: 'rgba(239, 68, 68, 0.05)', border: '1px solid rgba(239, 68, 68, 0.2)',
-                  borderRadius: 8,
-                  color: '#ef4444', fontSize: 13, fontWeight: 600, cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                }}
-                onMouseEnter={e => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)'}
-                onMouseLeave={e => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.05)'}
-              >
-                <Trash2 size={14} />
-                Delete room
-              </button>
-            )}
           </div>
-        </div>
+        )}
 
         {/* 3-column layout - Modern Floating Panels */}
         <div style={{
           display: 'flex',
           height: '100vh',
-          padding: `144px 32px 32px`,
+          padding: isSessionActive ? '32px' : '144px 32px 32px',
           gap: 24,
           overflow: 'hidden',
           boxSizing: 'border-box',
           fontFamily: "'Manrope', sans-serif",
+          transition: 'padding 0.3s ease',
         }}>
           <PresenceSidebar members={members} currentUserId={user?.id || ''} isAdmin={isAdmin} onKick={handleKick} />
-          <Timer roomId={roomId} isAdmin={isAdmin} currentUserId={user?.id || ''} myStatus={myStatus} onStatusChange={setMyStatus} />
+          <Timer roomId={roomId} isAdmin={isAdmin} currentUserId={user?.id || ''} myStatus={myStatus} onStatusChange={setMyStatus} onSessionStateChange={setIsSessionActive} />
           <Chat roomId={roomId} />
         </div>
 
