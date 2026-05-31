@@ -67,14 +67,14 @@ Students preparing for exams or interviews often struggle to stay consistent whi
  - Backend & Realtime: Supabase (Postgres, Auth, Realtime, Storage)
  - Deployment & tooling: Vercel, npm
 
- Full tech list (concise)
+ Full tech 
  - React 18, TypeScript, Vite, Wouter
  - Supabase (Postgres, Auth, Realtime, Storage)
  - Three.js, Vanta.js (FOG), React Lenis
  - CSS variables, Flexbox, Grid, Lucide React
  - Vercel, npm
 
- Project (essential)
+ Project 
  - public/                — static assets (pfp images, etc.)
  - src/components/        — UI components
  - src/pages/             — route pages (Room, Lobby, Dashboard...)
