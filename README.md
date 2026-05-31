@@ -55,7 +55,7 @@ Students preparing for exams or interviews often struggle to stay consistent whi
 
 ### Premium UI/UX
 - Glassmorphic dark design with **Vanta.js FOG** animated 3D background (Three.js)
-- Buttery smooth scrolling via **React Lenis**
+- Smooth scrolling via **React Lenis**
 - Fully responsive web application.
 ---
 
